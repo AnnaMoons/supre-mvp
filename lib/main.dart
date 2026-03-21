@@ -65,6 +65,463 @@ class SupreApp extends StatelessWidget {
   }
 }
 
+class HelpCenterScreen extends StatefulWidget {
+  const HelpCenterScreen({super.key});
+
+  @override
+  State<HelpCenterScreen> createState() => _HelpCenterScreenState();
+}
+
+class _HelpCenterScreenState extends State<HelpCenterScreen> {
+  final List<Map<String, String>> _faqs = [
+    {
+      'question': '¿Cómo realizo el pago de mi cuota?',
+      'answer': 'Para pagar tu cuota, ingresa a la pantalla de inicio y selecciona el crédito que deseas pagar. Luego, presiona el botón "Pagar cuota actual" y selecciona tu método de pago preferido (PSE o tarjeta).',
+    },
+    {
+      'question': '¿Cuáles son los métodos de pago disponibles?',
+      'answer': 'Actualmente aceptamos pagos a través de PSE (Pagos Seguros en Línea) con tu banco colombiano, y pagos con tarjeta de crédito y débito.',
+    },
+    {
+      'question': '¿Puedo pagar varias cuotas a la vez?',
+      'answer': 'Sí, puedes pagar varias cuotas por adelantado. En la pantalla de detalle del crédito, selecciona las cuotas que deseas pagar y procede con el pago.',
+    },
+    {
+      'question': '¿Qué pasa si pago después de la fecha de vencimiento?',
+      'answer': 'Si pagas después de la fecha de vencimiento, se aplicarán intereses de mora según las condiciones de tu crédito. Te recomendamos pagar antes de la fecha límite para evitar cargos adicionales.',
+    },
+    {
+      'question': '¿Cómo descargo mi comprobante de pago?',
+      'answer': 'Ingresa al historial de pagos y selecciona el pago del cual deseas el comprobante. Encontrarás un botón de descarga para obtener tu comprobante en formato PDF.',
+    },
+    {
+      'question': '¿Puedo cambiar mi fecha de pago?',
+      'answer': 'Para modificar tu fecha de pago, comunícate con nuestro equipo de atención al cliente a través de los canales de contacto disponibles en la aplicación.',
+    },
+    {
+      'question': '¿Qué hago si tengo un problema con mi pago?',
+      'answer': 'Si experimentas algún problema con tu pago, comunícate con nuestro equipo de soporte a través del correo soporte@supre.co o llama a nuestra línea de atención.',
+    },
+    {
+      'question': '¿Está mi información segura?',
+      'answer': 'Sí, en Supre usamos los más altos estándares de seguridad para proteger tu información personal y financiera. Todos los pagos son procesados de forma segura.',
+    },
+  ];
+
+  int? _expandedIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Centro de ayuda'),
+      ),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  const Color(0xFF1C2546),
+                  const Color(0xFF1C2546).withAlpha(230),
+                ],
+              ),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withAlpha(26),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.help_outline,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  '¿Cómo podemos ayudarte?',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Encuentra respuestas a las preguntas más frecuentes',
+                  style: TextStyle(
+                    color: Colors.white.withAlpha(204),
+                    fontSize: 14,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
+            child: Row(
+              children: [
+                const Text(
+                  'Preguntas frecuentes',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  '${_faqs.length} preguntas',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey.shade500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: _faqs.length,
+              itemBuilder: (context, index) {
+                final faq = _faqs[index];
+                final isExpanded = _expandedIndex == index;
+                
+                return Card(
+                  color: Colors.white,
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: InkWell(
+                    onTap: () => setState(() {
+                      _expandedIndex = isExpanded ? null : index;
+                    }),
+                    borderRadius: BorderRadius.circular(12),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  faq['question']!,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                              AnimatedRotation(
+                                turns: isExpanded ? 0.5 : 0,
+                                duration: const Duration(milliseconds: 200),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.grey.shade500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (isExpanded) ...[
+                            const SizedBox(height: 12),
+                            Container(
+                              width: double.infinity,
+                              height: 1,
+                              color: Colors.grey.shade200,
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              faq['answer']!,
+                              style: TextStyle(
+                                color: Colors.grey.shade700,
+                                fontSize: 13,
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(13),
+                  blurRadius: 10,
+                  offset: const Offset(0, -2),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                const Text(
+                  '¿No encontraste lo que buscabas?',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Comunícate con nuestro equipo de soporte',
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(Icons.email_outlined, size: 18),
+                        label: const Text('Correo'),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: const Color(0xFF1C2546),
+                          side: const BorderSide(color: Color(0xFF1C2546)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(Icons.phone_outlined, size: 18),
+                        label: const Text('Llamar'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AboutScreen extends StatelessWidget {
+  const AboutScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Acerca de'),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF28D16),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Icon(
+                Icons.two_wheeler,
+                color: Colors.white,
+                size: 50,
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              'Supre',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1C2546),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.green.withAlpha(26),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                'Versión 1.0.0',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withAlpha(13),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  const Icon(
+                    Icons.two_wheeler,
+                    color: Color(0xFFF28D16),
+                    size: 40,
+                  ),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Financiera especializada en motos',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF1C2546),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Facilitamos el sueño de tener tu propia moto con planes de financiamiento flexibles y accesibles en Colombia.',
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 13,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            _buildInfoSection(
+              'Información de la app',
+              [
+                _buildInfoRow(Icons.apps_outlined, 'Versión', '1.0.0'),
+                _buildInfoRow(Icons.calendar_today_outlined, 'Última actualización', 'Marzo 2026'),
+                _buildInfoRow(Icons.code_outlined, 'Desarrollador', 'Supre Tech'),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _buildInfoSection(
+              'Contacto',
+              [
+                _buildInfoRow(Icons.language_outlined, 'Sitio web', 'www.supre.co'),
+                _buildInfoRow(Icons.email_outlined, 'Correo', 'soporte@supre.co'),
+                _buildInfoRow(Icons.phone_outlined, 'Teléfono', '01 8000 123 456'),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _buildInfoSection(
+              'Legal',
+              [
+                _buildInfoRow(Icons.description_outlined, 'Términos y condiciones', 'Ver más'),
+                _buildInfoRow(Icons.privacy_tip_outlined, 'Política de privacidad', 'Ver más'),
+              ],
+            ),
+            const SizedBox(height: 32),
+            Text(
+              '© 2026 Supre. Todos los derechos reservados.',
+              style: TextStyle(
+                color: Colors.grey.shade500,
+                fontSize: 12,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Hecho con ❤️ en Colombia 🇨🇴',
+              style: TextStyle(
+                color: Colors.grey.shade400,
+                fontSize: 11,
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoSection(String title, List<Widget> children) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(13),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF1C2546),
+            ),
+          ),
+          const SizedBox(height: 12),
+          ...children,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(IconData icon, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Icon(icon, size: 20, color: Colors.grey.shade500),
+          const SizedBox(width: 12),
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.grey.shade600,
+              fontSize: 13,
+            ),
+          ),
+          const Spacer(),
+          Text(
+            value,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 13,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
@@ -217,7 +674,12 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 24),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HelpCenterScreen()),
+                        );
+                      },
                       child: const Text(
                         'Ayuda',
                         style: TextStyle(
@@ -2974,9 +3436,9 @@ class CreditService {
         statusColor: Colors.red,
         statusBgColor: Colors.red.withAlpha(26),
         totalAmount: 4500000,
-        paidAmount: 1400000,
+        paidAmount: 1050000,
         totalQuotas: 24,
-        paidQuotas: 8,
+        paidQuotas: 6,
         currentQuota: 9,
         quotaAmount: 350000,
         nextDueDate: '15 Mar 2026',
@@ -3023,10 +3485,10 @@ class CreditService {
         statusColor: const Color(0xFFF59E0B),
         statusBgColor: const Color(0xFFFEF3C7),
         totalAmount: 2160000,
-        paidAmount: 720000,
+        paidAmount: 1440000,
         totalQuotas: 12,
-        paidQuotas: 4,
-        currentQuota: 5,
+        paidQuotas: 8,
+        currentQuota: 9,
         quotaAmount: 180000,
         nextDueDate: '20 Mar 2026',
         daysLeft: 9,
@@ -3070,10 +3532,10 @@ class CreditService {
         statusColor: Colors.green,
         statusBgColor: Colors.green.withAlpha(26),
         totalAmount: 9000000,
-        paidAmount: 3000000,
+        paidAmount: 6750000,
         totalQuotas: 36,
-        paidQuotas: 12,
-        currentQuota: 13,
+        paidQuotas: 27,
+        currentQuota: 28,
         quotaAmount: 250000,
         nextDueDate: '25 Mar 2026',
         daysLeft: 14,
@@ -3751,6 +4213,38 @@ class _CreditsScreenWithNavState extends State<CreditsScreenWithNav> {
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('¿Cerrar sesión?'),
+        content: const Text('¿Estás seguro de que deseas cerrar sesión?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+                (route) => false,
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Cerrar sesión'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -3785,19 +4279,6 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 32),
             _buildMenuItem(
               context, 
-              Icons.history, 
-              'Historial de pagos',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PaymentHistoryScreen(),
-                  ),
-                );
-              },
-            ),
-            _buildMenuItem(
-              context, 
               Icons.notifications_outlined, 
               'Notificaciones',
               onTap: () {
@@ -3811,10 +4292,40 @@ class ProfileScreen extends StatelessWidget {
                 );
               },
             ),
-            _buildMenuItem(context, Icons.help_outline, 'Ayuda'),
-            _buildMenuItem(context, Icons.info_outline, 'Acerca de'),
+            _buildMenuItem(
+              context, 
+              Icons.help_outline, 
+              'Ayuda',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HelpCenterScreen(),
+                  ),
+                );
+              },
+            ),
+            _buildMenuItem(
+              context, 
+              Icons.info_outline, 
+              'Acerca de',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AboutScreen(),
+                  ),
+                );
+              },
+            ),
             const Divider(height: 32),
-            _buildMenuItem(context, Icons.logout, 'Cerrar sesión', isDestructive: true),
+            _buildMenuItem(
+              context, 
+              Icons.logout, 
+              'Cerrar sesión', 
+              isDestructive: true,
+              onTap: () => _showLogoutDialog(context),
+            ),
           ],
         ),
       ),
@@ -4012,7 +4523,7 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                         ),
                       ),
                       Text(
-                        'Cuota ${_credit.currentQuota} • Vence ${_credit.nextDueDate}',
+                        'Cuota ${_credit.currentQuota} de ${_credit.totalQuotas} • Vence ${_credit.nextDueDate}',
                         style: TextStyle(
                           color: Colors.grey.shade700,
                           fontSize: 13,
@@ -4032,58 +4543,6 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: _buildMainStat(
-                  'Total pagado',
-                  CreditService.formatFullCurrency(_credit.paidAmount),
-                  Colors.green,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Container(
-                width: 80,
-                height: 80,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 80,
-                      height: 80,
-                      child: CircularProgressIndicator(
-                        value: _credit.progressPercentage,
-                        strokeWidth: 8,
-                        backgroundColor: Colors.grey.shade200,
-                        valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF306EE8)),
-                      ),
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '${(_credit.progressPercentage * 100).round()}%',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF1C2546),
-                          ),
-                        ),
-                        Text(
-                          'pagado',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.grey.shade600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
           const SizedBox(height: 16),
           Row(
             children: [
@@ -4097,16 +4556,7 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                   child: Column(
                     children: [
                       Text(
-                        CreditService.formatFullCurrency(_credit.remainingAmount),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF1C2546),
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        'de ${CreditService.formatFullCurrency(_credit.totalAmount)}',
+                        'Total pagado',
                         style: TextStyle(
                           fontSize: 11,
                           color: Colors.grey.shade600,
@@ -4114,9 +4564,18 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Saldo por pagar',
+                        CreditService.formatFullCurrency(_credit.paidAmount),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '${_credit.paidQuotas} de ${_credit.totalQuotas} cuotas pagadas',
                         style: TextStyle(
-                          fontSize: 11,
+                          fontSize: 10,
                           color: Colors.grey.shade500,
                         ),
                       ),
@@ -4135,7 +4594,15 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                   child: Column(
                     children: [
                       Text(
-                        '${_credit.paidQuotas} de ${_credit.totalQuotas}',
+                        'Saldo total por pagar',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        CreditService.formatFullCurrency(_credit.remainingAmount),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -4144,17 +4611,9 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        '${_credit.remainingQuotas} restantes',
+                        '${_credit.remainingQuotas} de ${_credit.totalQuotas} cuotas por pagar',
                         style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Cuotas pagadas',
-                        style: TextStyle(
-                          fontSize: 11,
+                          fontSize: 10,
                           color: Colors.grey.shade500,
                         ),
                       ),
@@ -4169,34 +4628,12 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
     );
   }
 
-  Widget _buildMainStat(String label, String value, Color valueColor) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          value,
-          style: TextStyle(
-            color: valueColor,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.grey.shade600,
-            fontSize: 12,
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildProgressSection() {
-    final paidWidth = _credit.paidQuotas / _credit.totalQuotas;
-    final currentWidth = 1 / _credit.totalQuotas;
-    
+    final progress = _credit.progressPercentage;
+    final paidAmount = _credit.paidAmount;
+    final totalAmount = _credit.totalAmount;
+    final percentText = '${(progress * 100).round()}%';
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -4211,106 +4648,151 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
         Card(
           color: Colors.white,
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: [
                 Row(
                   children: [
-                    _buildProgressDot(true, Colors.green, showCheck: true),
                     Expanded(
-                      child: Container(
-                        height: 6,
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                        child: FractionallySizedBox(
-                          alignment: Alignment.centerLeft,
-                          widthFactor: paidWidth,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(3),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Cuotas pagadas',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
                             ),
+                          ),
+                          const SizedBox(height: 4),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: '${_credit.paidQuotas}',
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ' de ${_credit.totalQuotas}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            '${_credit.remainingQuotas} cuotas por pagar',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Colors.grey.shade500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      percentText,
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF22C55E),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      FractionallySizedBox(
+                        widthFactor: progress,
+                        child: Container(
+                          height: 16,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xFF22C55E),
+                                Color(0xFF4ADE80),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF22C55E).withAlpha(77),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ),
-                    _buildProgressDot(true, const Color(0xFFF28D16), showCheck: false),
-                    Expanded(
-                      child: Container(
-                        height: 6,
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                    ),
-                    _buildProgressDot(false, Colors.grey, showCheck: false),
-                  ],
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildProgressLabel('Pagadas', '${_credit.paidQuotas} cuotas', Colors.green),
-                    _buildProgressLabel('Cuota actual', '${_credit.currentQuota} de ${_credit.totalQuotas}', const Color(0xFFF28D16)),
-                    _buildProgressLabel('Pendientes', '${_credit.remainingQuotas} cuotas', Colors.grey.shade400),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Total pagado',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                        Text(
+                          CreditService.formatFullCurrency(paidAmount),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF22C55E),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Total del crédito',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                        Text(
+                          CreditService.formatFullCurrency(totalAmount),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF1C2546),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ],
             ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildProgressDot(bool filled, Color color, {bool showCheck = false}) {
-    return Container(
-      width: 28,
-      height: 28,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: filled ? color : Colors.white,
-        border: Border.all(color: color, width: 3),
-      ),
-      child: filled && showCheck
-          ? const Icon(Icons.check, size: 14, color: Colors.white)
-          : filled && !showCheck
-              ? Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                  ),
-                )
-              : null,
-    );
-  }
-
-  Widget _buildProgressLabel(String title, String value, Color color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: color,
-            fontSize: 11,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          value,
-          style: TextStyle(
-            color: color,
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
           ),
         ),
       ],
@@ -4351,12 +4833,6 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                   _buildDetailRow('Fecha de inicio', _credit.startDate),
                   const Divider(height: 16),
                   _buildDetailRow('Fecha de vencimiento', _credit.endDate),
-                  const Divider(height: 16),
-                  _buildDetailRow('Plazo', '${_credit.totalQuotas} meses'),
-                  const Divider(height: 16),
-                  _buildDetailRow('Valor total financiado', CreditService.formatFullCurrency(_credit.totalAmount)),
-                  const Divider(height: 16),
-                  _buildDetailRow('Valor de la cuota', CreditService.formatFullCurrency(_credit.quotaAmount)),
                   const Divider(height: 16),
                   _buildDetailRow('Tasa de interés', _credit.interestRate),
                 ],
@@ -4574,23 +5050,53 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
   }
 
   Widget _buildPayButton() {
-    return SizedBox(
-      width: double.infinity,
-      height: 52,
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PaymentScreen(preselectedCredit: _credit),
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 52,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentScreen(preselectedCredit: _credit),
+                ),
+              );
+            },
+            child: const Text(
+              'Pagar cuota actual',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-          );
-        },
-        child: const Text(
-          'Pagar cuota actual',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
+        const SizedBox(height: 12),
+        SizedBox(
+          width: double.infinity,
+          height: 48,
+          child: OutlinedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PaymentHistoryScreen(),
+                ),
+              );
+            },
+            style: OutlinedButton.styleFrom(
+              foregroundColor: const Color(0xFF1C2546),
+              side: const BorderSide(color: Color(0xFF1C2546)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: const Text(
+              'Ver historial de pagos',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -4636,18 +5142,123 @@ class PaymentHistoryScreen extends StatelessWidget {
 
   Widget _buildPaymentItem(BuildContext context, int index) {
     final payments = [
-      {'date': '15 Feb 2026', 'amount': '\$350.000', 'status': 'Pagado', 'quota': 'Cuota 8'},
-      {'date': '15 Ene 2026', 'amount': '\$350.000', 'status': 'Pagado', 'quota': 'Cuota 7'},
-      {'date': '15 Dic 2025', 'amount': '\$350.000', 'status': 'Pagado', 'quota': 'Cuota 6'},
-      {'date': '15 Nov 2025', 'amount': '\$350.000', 'status': 'Pagado', 'quota': 'Cuota 5'},
-      {'date': '15 Oct 2025', 'amount': '\$350.000', 'status': 'Pagado', 'quota': 'Cuota 4'},
-      {'date': '15 Sep 2025', 'amount': '\$350.000', 'status': 'Pagado', 'quota': 'Cuota 3'},
-      {'date': '15 Ago 2025', 'amount': '\$350.000', 'status': 'Pagado', 'quota': 'Cuota 2'},
-      {'date': '15 Jul 2025', 'amount': '\$350.000', 'status': 'Pagado', 'quota': 'Cuota 1'},
+      {
+        'quota': 'Cuota 8',
+        'invoice': 'MCSCR-3216-Q8',
+        'date': '15 Feb 2026',
+        'time': '14:32:05',
+        'amount': '\$350.000',
+        'status': 'Pagado',
+        'method': 'PSE - Bancolombia',
+        'totalCredit': '\$4.500.000',
+        'remainingBalance': '\$5.600.000',
+        'pendingQuotas': '16',
+        'paidQuotas': '8',
+        'interestRate': '2.5% mensual',
+      },
+      {
+        'quota': 'Cuota 7',
+        'invoice': 'MCSCR-3216-Q7',
+        'date': '15 Ene 2026',
+        'time': '10:15:22',
+        'amount': '\$350.000',
+        'status': 'Pagado',
+        'method': 'PSE - Bancolombia',
+        'totalCredit': '\$4.500.000',
+        'remainingBalance': '\$5.950.000',
+        'pendingQuotas': '17',
+        'paidQuotas': '7',
+        'interestRate': '2.5% mensual',
+      },
+      {
+        'quota': 'Cuota 6',
+        'invoice': 'MCSCR-3216-Q6',
+        'date': '15 Dic 2025',
+        'time': '09:45:11',
+        'amount': '\$350.000',
+        'status': 'Pagado',
+        'method': 'PSE - Bancolombia',
+        'totalCredit': '\$4.500.000',
+        'remainingBalance': '\$6.300.000',
+        'pendingQuotas': '18',
+        'paidQuotas': '6',
+        'interestRate': '2.5% mensual',
+      },
+      {
+        'quota': 'Cuota 5',
+        'invoice': 'MCSCR-3216-Q5',
+        'date': '15 Nov 2025',
+        'time': '16:20:33',
+        'amount': '\$350.000',
+        'status': 'Pagado',
+        'method': 'PSE - Bancolombia',
+        'totalCredit': '\$4.500.000',
+        'remainingBalance': '\$6.650.000',
+        'pendingQuotas': '19',
+        'paidQuotas': '5',
+        'interestRate': '2.5% mensual',
+      },
+      {
+        'quota': 'Cuota 4',
+        'invoice': 'MCSCR-3216-Q4',
+        'date': '15 Oct 2025',
+        'time': '11:08:45',
+        'amount': '\$350.000',
+        'status': 'Pagado',
+        'method': 'PSE - Bancolombia',
+        'totalCredit': '\$4.500.000',
+        'remainingBalance': '\$7.000.000',
+        'pendingQuotas': '20',
+        'paidQuotas': '4',
+        'interestRate': '2.5% mensual',
+      },
+      {
+        'quota': 'Cuota 3',
+        'invoice': 'MCSCR-3216-Q3',
+        'date': '15 Sep 2025',
+        'time': '13:55:02',
+        'amount': '\$350.000',
+        'status': 'Pagado',
+        'method': 'PSE - Davivienda',
+        'totalCredit': '\$4.500.000',
+        'remainingBalance': '\$7.350.000',
+        'pendingQuotas': '21',
+        'paidQuotas': '3',
+        'interestRate': '2.5% mensual',
+      },
+      {
+        'quota': 'Cuota 2',
+        'invoice': 'MCSCR-3216-Q2',
+        'date': '15 Ago 2025',
+        'time': '08:30:17',
+        'amount': '\$350.000',
+        'status': 'Pagado',
+        'method': 'PSE - Davivienda',
+        'totalCredit': '\$4.500.000',
+        'remainingBalance': '\$7.700.000',
+        'pendingQuotas': '22',
+        'paidQuotas': '2',
+        'interestRate': '2.5% mensual',
+      },
+      {
+        'quota': 'Cuota 1',
+        'invoice': 'MCSCR-3216-Q1',
+        'date': '15 Jul 2025',
+        'time': '15:42:09',
+        'amount': '\$350.000',
+        'status': 'Pagado',
+        'method': 'PSE - Bancolombia',
+        'totalCredit': '\$4.500.000',
+        'remainingBalance': '\$8.050.000',
+        'pendingQuotas': '23',
+        'paidQuotas': '1',
+        'interestRate': '2.5% mensual',
+      },
     ];
     final payment = payments[index];
 
     return Card(
+      color: Colors.white,
       margin: const EdgeInsets.only(bottom: 12),
       child: InkWell(
         onTap: () => _showPaymentDetail(context, payment),
@@ -4706,58 +5317,215 @@ class PaymentHistoryScreen extends StatelessWidget {
   void _showPaymentDetail(BuildContext context, Map<String, String> payment) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) => Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Detalle del pago',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            _buildDetailRow('Referencia', 'TXN-2026${(8 - int.parse(payment['quota']!.substring(7)) + 1).toString().padLeft(4, '0')}'),
-            _buildDetailRow('Fecha', payment['date']!),
-            _buildDetailRow('Hora', '14:32:05'),
-            _buildDetailRow('Monto', payment['amount']!),
-            _buildDetailRow('Método de pago', 'PSE - Bancolombia'),
-            _buildDetailRow('Estado', payment['status']!),
-            const SizedBox(height: 20),
-            Row(
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.75,
+        minChildSize: 0.5,
+        maxChildSize: 0.95,
+        expand: false,
+        builder: (context, scrollController) => Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: SingleChildScrollView(
+            controller: scrollController,
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.picture_as_pdf, color: Colors.red),
-                const SizedBox(width: 8),
-                const Expanded(
-                  child: Text(
-                    'Comprobante de pago PDF',
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.download),
-                  onPressed: () {},
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Detalle del pago',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withAlpha(26),
+                        borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.check_circle, color: Colors.green, size: 16),
+                        const SizedBox(width: 4),
+                        Text(
+                          payment['status']!,
+                          style: const TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF28D16).withAlpha(26),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-          ],
+                child: Column(
+                  children: [
+                    Text(
+                      payment['quota']!,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1C2546),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      payment['amount']!,
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFF28D16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade200),
+                ),
+                child: Column(
+                  children: [
+                    _buildDetailRow('Factura', payment['invoice']!),
+                    const Divider(height: 20),
+                    _buildDetailRow('Fecha de pago', payment['date']!),
+                    const Divider(height: 20),
+                    _buildDetailRow('Hora', payment['time']!),
+                    const Divider(height: 20),
+                    _buildDetailRow('Método de pago', payment['method']!),
+                    const Divider(height: 20),
+                    _buildDetailRow('Total del crédito', payment['totalCredit']!),
+                    const Divider(height: 20),
+                    _buildDetailRow('Saldo restante', payment['remainingBalance']!),
+                    const Divider(height: 20),
+                    _buildDetailRow('Cuotas pagadas', payment['paidQuotas']!),
+                    const Divider(height: 20),
+                    _buildDetailRow('Cuotas pendientes', payment['pendingQuotas']!),
+                    const Divider(height: 20),
+                    _buildDetailRow('Tasa de interés', payment['interestRate']!),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade200),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.red.withAlpha(26),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Icon(Icons.picture_as_pdf, color: Colors.red, size: 28),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Comprobante de pago',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '${payment['invoice']}.pdf',
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Descargando ${payment['invoice']}.pdf'),
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        );
+                      },
+                      icon: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1C2546),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Icon(
+                          Icons.download,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       ),
-    );
+    ),
+  );
   }
 
   Widget _buildDetailRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.grey)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
+          Text(label, style: TextStyle(color: Colors.grey.shade600, fontSize: 14)),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
         ],
       ),
     );
