@@ -3578,39 +3578,43 @@ class NotificationService {
       NotificationItem(
         id: '1',
         title: '¡Cuota próxima a vencer!',
-        body: 'Tu cuota de \$350.000 vence en 3 días. No dejes pasar la fecha.',
+        body: 'La cuota MCSCR-7821-Q9 de tu crédito Creditek #67890 vence en 9 días. El valor a pagar es \$180.000. No dejes pasar la fecha.',
         date: now.subtract(const Duration(hours: 2)),
         type: NotificationType.paymentReminder,
+        creditId: '67890',
         isRead: false,
       ),
       NotificationItem(
         id: '2',
         title: 'Cuota vencida',
-        body: 'Tienes una cuota vencida de tu crédito #12346. Regulariza tu cuenta.',
+        body: 'La cuota MCSCR-3216-Q7 de tu crédito Creditek #12345 lleva 2 días vencida. El valor pendiente es \$350.000. Regulariza tu cuenta cuanto antes.',
         date: now.subtract(const Duration(days: 1)),
         type: NotificationType.paymentDue,
+        creditId: '12345',
         isRead: false,
       ),
       NotificationItem(
         id: '3',
         title: '¡Pago recibido!',
-        body: 'Recibimos tu pago de \$350.000. Gracias por tu puntualidad.',
+        body: 'Recibimos tu pago de \$350.000 por la cuota MCSCR-3216-Q6 del crédito Creditek #12345. ¡Gracias por tu puntualidad!',
         date: now.subtract(const Duration(days: 5)),
         type: NotificationType.paymentConfirmed,
+        creditId: '12345',
         isRead: true,
       ),
       NotificationItem(
         id: '4',
         title: 'Recordatorio de pago',
-        body: 'Te recordamos que mañana vence tu cuota de \$280.000.',
+        body: 'Recuerda que la cuota MCSCR-7821-Q9 de tu crédito Creditek #67890 vence pronto. Valor: \$180.000. Paga a tiempo y evita intereses.',
         date: now.subtract(const Duration(days: 7)),
         type: NotificationType.paymentReminder,
+        creditId: '67890',
         isRead: true,
       ),
       NotificationItem(
         id: '5',
         title: 'Bienvenido a Supre',
-        body: 'Gracias por confiar en nosotros. Gestiona tu crédito desde la app.',
+        body: 'Gracias por confiar en nosotros. Desde aquí puedes gestionar todos tus créditos y realizar tus pagos fácilmente.',
         date: now.subtract(const Duration(days: 30)),
         type: NotificationType.welcome,
         isRead: true,
@@ -3625,6 +3629,7 @@ class NotificationItem {
   final String body;
   final DateTime date;
   final NotificationType type;
+  final String? creditId;
   bool isRead;
 
   NotificationItem({
@@ -3633,6 +3638,7 @@ class NotificationItem {
     required this.body,
     required this.date,
     required this.type,
+    this.creditId,
     this.isRead = false,
   });
 
@@ -4198,7 +4204,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           nav.pop();
           if (notification.type == NotificationType.paymentDue ||
               notification.type == NotificationType.paymentReminder) {
-            nav.push(MaterialPageRoute(builder: (_) => const PaymentScreen()));
+            final credits = CreditService.getCredits();
+            final preselected = notification.creditId != null
+                ? credits.firstWhere((c) => c.id == notification.creditId,
+                    orElse: () => credits.first)
+                : credits.first;
+            nav.push(MaterialPageRoute(
+                builder: (_) => PaymentScreen(preselectedCredit: preselected)));
           } else if (notification.type == NotificationType.paymentConfirmed) {
             nav.push(MaterialPageRoute(builder: (_) => const CreditsListScreen()));
           }
