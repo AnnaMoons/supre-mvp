@@ -585,7 +585,7 @@ class WelcomeScreen extends StatelessWidget {
                 const Spacer(),
                 SizedBox(
                   width: double.infinity,
-                  height: 64,
+                  height: 72,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -596,26 +596,26 @@ class WelcomeScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF28D16),
                       foregroundColor: const Color(0xFF1C2546),
-                      elevation: 6,
-                      shadowColor: const Color(0xFFF28D16).withOpacity(0.5),
+                      elevation: 10,
+                      shadowColor: const Color(0xFFF28D16).withOpacity(0.6),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                     ),
                     child: const Text(
                       'Entrar',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
                 SizedBox(
                   width: double.infinity,
-                  height: 64,
+                  height: 72,
                   child: OutlinedButton(
                     onPressed: () {
                       Navigator.push(
@@ -625,15 +625,16 @@ class WelcomeScreen extends StatelessWidget {
                     },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.white, width: 2),
+                      backgroundColor: Colors.white.withOpacity(0.15),
+                      side: BorderSide(color: Colors.white.withOpacity(0.6), width: 2),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                     ),
                     child: const Text(
                       'Crear mi cuenta',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
                       ),
