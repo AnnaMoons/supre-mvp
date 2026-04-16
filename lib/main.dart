@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 void main() {
@@ -857,6 +858,11 @@ void showToast(BuildContext context, String message, {ToastType type = ToastType
                   style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),
                 ),
               ),
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: () { if (entry.mounted) entry.remove(); },
+                child: const Icon(Icons.close, color: Colors.white, size: 18),
+              ),
             ],
           ),
         ),
@@ -886,6 +892,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _documentNumberController = TextEditingController();
 
   // Step 2
+  final _step2Key = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _secondNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -923,6 +930,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _nextStep() {
     if (_currentStep == 0) {
       if (!_step1Key.currentState!.validate()) return;
+    }
+    if (_currentStep == 1) {
+      if (!_step2Key.currentState!.validate()) return;
     }
     if (_currentStep == 2) {
       if (!_step3Key.currentState!.validate()) return;
@@ -1055,23 +1065,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-                  if (_currentStep == 1) ...[
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: TextButton(
-                        onPressed: _nextStep,
-                        child: const Text(
-                          'Omitir este paso',
-                          style: TextStyle(
-                            color: Color(0xFFF28D16),
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
                 ],
               ),
             ),
@@ -1131,9 +1124,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
           TextFormField(
             controller: _documentNumberController,
             keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: _inputDecoration('Número de documento'),
-            validator: (value) =>
-                value == null || value.isEmpty ? 'Este campo es requerido' : null,
+            validator: (value) {
+              if (value == null || value.isEmpty) return 'Este campo es requerido';
+              if (!RegExp(r'^\d+$').hasMatch(value)) return 'Solo se permiten números';
+              if (value.length < 6) return 'Mínimo 6 dígitos';
+              return null;
+            },
           ),
         ],
       ),
@@ -1141,50 +1139,57 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget _buildStep2() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Tus nombres',
-          style: TextStyle(
-            fontFamily: 'Gilroy',
-            fontSize: 28,
-            fontWeight: FontWeight.w800,
-            color: Color(0xFFF28D16),
+    return Form(
+      key: _step2Key,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Tus nombres',
+            style: TextStyle(
+              fontFamily: 'Gilroy',
+              fontSize: 28,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFFF28D16),
+            ),
           ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          'Este paso es opcional, puedes omitirlo.',
-          style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
-        ),
-        const SizedBox(height: 28),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: TextFormField(
-            controller: _firstNameController,
-            decoration: _inputDecoration('Primer nombre'),
+          const SizedBox(height: 6),
+          Text(
+            'El segundo nombre y segundo apellido son opcionales.',
+            style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: TextFormField(
-            controller: _secondNameController,
-            decoration: _inputDecoration('Segundo nombre'),
+          const SizedBox(height: 28),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: TextFormField(
+              controller: _firstNameController,
+              decoration: _inputDecoration('Primer nombre *'),
+              validator: (value) =>
+                  value == null || value.trim().isEmpty ? 'El primer nombre es requerido' : null,
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: TextFormField(
-            controller: _lastNameController,
-            decoration: _inputDecoration('Primer apellido'),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: TextFormField(
+              controller: _secondNameController,
+              decoration: _inputDecoration('Segundo nombre'),
+            ),
           ),
-        ),
-        TextFormField(
-          controller: _secondLastNameController,
-          decoration: _inputDecoration('Segundo apellido'),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: TextFormField(
+              controller: _lastNameController,
+              decoration: _inputDecoration('Primer apellido *'),
+              validator: (value) =>
+                  value == null || value.trim().isEmpty ? 'El primer apellido es requerido' : null,
+            ),
+          ),
+          TextFormField(
+            controller: _secondLastNameController,
+            decoration: _inputDecoration('Segundo apellido'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -1359,11 +1364,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   keyboardType: _otpMethod == 'correo'
                       ? TextInputType.emailAddress
                       : TextInputType.phone,
+                  inputFormatters: _otpMethod == 'celular'
+                      ? [FilteringTextInputFormatter.digitsOnly]
+                      : null,
                   decoration: _inputDecoration(
                     _otpMethod == 'correo' ? 'Correo electrónico' : 'Número de celular',
                   ),
-                  validator: (value) =>
-                      value == null || value.isEmpty ? 'Este campo es requerido' : null,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) return 'Este campo es requerido';
+                    if (_otpMethod == 'correo') {
+                      if (!RegExp(r'^[\w\.\-]+@[\w\-]+\.[a-zA-Z]{2,}$').hasMatch(value)) {
+                        return 'Ingresa un correo válido';
+                      }
+                    } else {
+                      if (!RegExp(r'^\d{7,15}$').hasMatch(value)) {
+                        return 'Ingresa un número de celular válido';
+                      }
+                    }
+                    return null;
+                  },
                 ),
               ),
               const SizedBox(width: 10),
@@ -1396,9 +1415,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             TextFormField(
               controller: _otpCodeController,
               keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: _inputDecoration('Código de verificación'),
-              validator: (value) =>
-                  value == null || value.isEmpty ? 'Ingresa el código recibido' : null,
+              validator: (value) {
+                if (value == null || value.isEmpty) return 'Ingresa el código recibido';
+                if (!RegExp(r'^\d+$').hasMatch(value)) return 'El código solo debe contener números';
+                return null;
+              },
             ),
             const SizedBox(height: 10),
             Align(
@@ -4160,13 +4183,27 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   void _showNotificationDetail(NotificationItem notification) {
+    final nav = Navigator.of(context);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) => _NotificationDetail(notification: notification),
+      builder: (modalContext) => _NotificationDetail(
+        notification: notification,
+        onClose: () => Navigator.pop(modalContext),
+        onNavigate: () {
+          Navigator.pop(modalContext);
+          nav.pop();
+          if (notification.type == NotificationType.paymentDue ||
+              notification.type == NotificationType.paymentReminder) {
+            nav.push(MaterialPageRoute(builder: (_) => const PaymentScreen()));
+          } else if (notification.type == NotificationType.paymentConfirmed) {
+            nav.push(MaterialPageRoute(builder: (_) => const CreditsListScreen()));
+          }
+        },
+      ),
     );
   }
 }
@@ -4244,6 +4281,12 @@ class _NotificationTile extends StatelessWidget {
               ),
             ],
           ),
+          trailing: IconButton(
+            icon: Icon(Icons.close, size: 18, color: Colors.grey.shade400),
+            onPressed: onDismiss,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
+          ),
           onTap: onTap,
         ),
       ),
@@ -4253,8 +4296,26 @@ class _NotificationTile extends StatelessWidget {
 
 class _NotificationDetail extends StatelessWidget {
   final NotificationItem notification;
+  final VoidCallback onClose;
+  final VoidCallback? onNavigate;
 
-  const _NotificationDetail({required this.notification});
+  const _NotificationDetail({
+    required this.notification,
+    required this.onClose,
+    this.onNavigate,
+  });
+
+  String get _ctaLabel {
+    switch (notification.type) {
+      case NotificationType.paymentDue:
+      case NotificationType.paymentReminder:
+        return 'Ir a pagar';
+      case NotificationType.paymentConfirmed:
+        return 'Ver mis créditos';
+      default:
+        return '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -4265,6 +4326,7 @@ class _NotificationDetail extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: 56,
@@ -4294,34 +4356,31 @@ class _NotificationDetail extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       _formatDate(notification.date),
-                      style: TextStyle(
-                        color: Colors.grey.shade500,
-                      ),
+                      style: TextStyle(color: Colors.grey.shade500),
                     ),
                   ],
                 ),
+              ),
+              IconButton(
+                icon: Icon(Icons.close, color: Colors.grey.shade400),
+                onPressed: onClose,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
               ),
             ],
           ),
           const SizedBox(height: 24),
           Text(
             notification.body,
-            style: const TextStyle(
-              fontSize: 16,
-              height: 1.5,
-            ),
+            style: const TextStyle(fontSize: 16, height: 1.5),
           ),
           const SizedBox(height: 24),
-          if (notification.type == NotificationType.paymentReminder ||
-              notification.type == NotificationType.paymentDue)
+          if (_ctaLabel.isNotEmpty)
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                child: const Text('Ir a pagar'),
+                onPressed: onNavigate,
+                child: Text(_ctaLabel),
               ),
             ),
           const SizedBox(height: 16),
@@ -4742,14 +4801,14 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Juan Pérez',
+              'Andrés González',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'juan@email.com',
+              'andres@email.com',
               style: TextStyle(color: Colors.grey.shade600),
             ),
             const SizedBox(height: 32),
