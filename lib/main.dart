@@ -19,17 +19,23 @@ class SupreApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
         useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+        scaffoldBackgroundColor: const Color(0xFFEEF0F4),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
-          foregroundColor: Colors.black87,
+          foregroundColor: Color(0xFF1C2546),
           elevation: 0,
           centerTitle: true,
+          titleTextStyle: TextStyle(
+            color: Color(0xFF1C2546),
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Gilroy',
+          ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFF59E0B),
-            foregroundColor: Colors.white,
+            backgroundColor: const Color(0xFFF28D16),
+            foregroundColor: const Color(0xFF1C2546),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -54,9 +60,12 @@ class SupreApp extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         ),
         cardTheme: CardTheme(
-          elevation: 2,
+          elevation: 0,
+          color: Colors.white,
+          shadowColor: Colors.black.withOpacity(0.08),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: Colors.grey.shade200, width: 1),
           ),
         ),
       ),
@@ -546,13 +555,16 @@ class WelcomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 const Spacer(),
-                const Image(
-                  image: AssetImage('assets/Logo fondo oscuro.png'),
-                  height: 84,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: const Image(
+                    image: AssetImage('assets/Logo fondo oscuro.png'),
+                    height: 71,
+                  ),
                 ),
                 const SizedBox(height: 40),
                 RichText(
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   text: TextSpan(
                     style: TextStyle(
                       fontFamily: 'Gilroy',
@@ -568,23 +580,10 @@ class WelcomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    'Motos con soluciones efectivas de crédito, que se adaptan a ti.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white70,
-                      height: 1.5,
-                    ),
-                  ),
-                ),
                 const Spacer(),
                 SizedBox(
                   width: double.infinity,
-                  height: 56,
+                  height: 64,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -595,23 +594,26 @@ class WelcomeScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF28D16),
                       foregroundColor: Colors.white,
+                      elevation: 6,
+                      shadowColor: const Color(0xFFF28D16).withOpacity(0.5),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                     child: const Text(
-                      'Iniciar sesión',
+                      'Entrar',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
-                  height: 56,
+                  height: 64,
                   child: OutlinedButton(
                     onPressed: () {
                       Navigator.push(
@@ -623,74 +625,20 @@ class WelcomeScreen extends StatelessWidget {
                       foregroundColor: Colors.white,
                       side: const BorderSide(color: Colors.white, width: 2),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                     child: const Text(
-                      'Crear cuenta',
+                      'Crear mi cuenta',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 32),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Términos',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    Container(
-                      width: 1,
-                      height: 16,
-                      color: Colors.white30,
-                    ),
-                    const SizedBox(width: 24),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Privacidad',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    Container(
-                      width: 1,
-                      height: 16,
-                      color: Colors.white30,
-                    ),
-                    const SizedBox(width: 24),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const HelpCenterScreen()),
-                        );
-                      },
-                      child: const Text(
-                        'Ayuda',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
               ],
             ),
           ),
@@ -754,31 +702,10 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 20),
-                const Icon(
-                  Icons.two_wheeler,
-                  size: 80,
-                  color: Color(0xFFF28D16),
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Supre',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Gilroy',
-                    fontSize: 60,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xFFF28D16),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Inicia sesión para gestionar tus préstamos de forma segura',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Gilroy',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w300,
-                    color: Color(0xFF575756),
+                Center(
+                  child: Image.asset(
+                    'assets/Logo fondo claro.png',
+                    height: 71,
                   ),
                 ),
                 const SizedBox(height: 48),
@@ -787,7 +714,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     labelText: 'Correo o identificación',
-                    prefixIcon: Icon(Icons.person_outline, color: Color(0xFFF28D16)),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -802,7 +728,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
                     labelText: 'Contraseña',
-                    prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFFF28D16)),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscurePassword ? Icons.visibility_off : Icons.visibility,
@@ -835,7 +760,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()),
                       );
                     },
-                    child: const Text('¿Olvidaste tu contraseña?'),
+                    child: const Text(
+                      '¿Olvidaste tu contraseña?',
+                      style: TextStyle(color: Color(0xFFF28D16)),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -883,6 +811,61 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
+enum ToastType { success, error, warning, info }
+
+void showToast(BuildContext context, String message, {ToastType type = ToastType.info}) {
+  final colors = {
+    ToastType.success: const Color(0xFF2E7D32),
+    ToastType.error:   const Color(0xFFC62828),
+    ToastType.warning: const Color(0xFFF28D16),
+    ToastType.info:    const Color(0xFF1565C0),
+  };
+  final icons = {
+    ToastType.success: Icons.check_circle_outline,
+    ToastType.error:   Icons.error_outline,
+    ToastType.warning: Icons.warning_amber_rounded,
+    ToastType.info:    Icons.info_outline,
+  };
+  final overlay = Overlay.of(context);
+  late OverlayEntry entry;
+  entry = OverlayEntry(
+    builder: (ctx) => Positioned(
+      top: MediaQuery.of(ctx).viewPadding.top + 16,
+      left: 16,
+      right: 16,
+      child: Material(
+        color: Colors.transparent,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            color: colors[type],
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: const [
+              BoxShadow(color: Colors.black26, blurRadius: 10, offset: Offset(0, 4)),
+            ],
+          ),
+          child: Row(
+            children: [
+              Icon(icons[type], color: Colors.white, size: 22),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+  overlay.insert(entry);
+  Future.delayed(const Duration(seconds: 3), () {
+    if (entry.mounted) entry.remove();
+  });
+}
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -891,66 +874,95 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _documentTypeController = TextEditingController();
+  int _currentStep = 0;
+  final int _totalSteps = 4;
+
+  // Step 1
+  final _step1Key = GlobalKey<FormState>();
+  String _selectedDocumentType = 'CC';
   final _documentNumberController = TextEditingController();
+
+  // Step 2
   final _firstNameController = TextEditingController();
   final _secondNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _secondLastNameController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _emailController = TextEditingController();
+
+  // Step 3
+  final _step3Key = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+
+  // Step 4
+  final _step4Key = GlobalKey<FormState>();
+  String _otpMethod = 'correo';
+  final _otpContactController = TextEditingController();
+  final _otpCodeController = TextEditingController();
+  bool _otpSent = false;
   bool _acceptTerms = false;
-  String _selectedDocumentType = 'CC';
 
   @override
   void dispose() {
-    _documentTypeController.dispose();
     _documentNumberController.dispose();
     _firstNameController.dispose();
     _secondNameController.dispose();
     _lastNameController.dispose();
     _secondLastNameController.dispose();
-    _phoneController.dispose();
-    _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _otpContactController.dispose();
+    _otpCodeController.dispose();
     super.dispose();
   }
 
-  String _formatPhone(String value) {
-    final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length <= 3) {
-      return digits;
-    } else if (digits.length <= 6) {
-      return '(${digits.substring(0, 3)}) ${digits.substring(3)}';
-    } else {
-      return '(${digits.substring(0, 3)}) ${digits.substring(3, 6)}-${digits.substring(6, 10)}';
+  void _nextStep() {
+    if (_currentStep == 0) {
+      if (!_step1Key.currentState!.validate()) return;
+    }
+    if (_currentStep == 2) {
+      if (!_step3Key.currentState!.validate()) return;
+    }
+    if (_currentStep < _totalSteps - 1) {
+      setState(() => _currentStep++);
     }
   }
 
-  void _register() {
-    if (!_acceptTerms) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Debes aceptar los términos y condiciones'),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
+  void _prevStep() {
+    if (_currentStep > 0) {
+      setState(() => _currentStep--);
+    } else {
+      Navigator.pop(context);
+    }
+  }
+
+  void _finish() {
+    if (!_step4Key.currentState!.validate()) return;
+    if (_otpCodeController.text != '123456') {
+      showToast(context, 'Código incorrecto. Usa 123456 por ahora.', type: ToastType.error);
       return;
     }
-    
-    if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const DashboardScreen()),
-      );
+    if (!_acceptTerms) {
+      showToast(context, 'Debes aceptar los términos y condiciones para continuar.', type: ToastType.warning);
+      return;
     }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const DashboardScreen()),
+    );
+  }
+
+  InputDecoration _inputDecoration(String label) {
+    return InputDecoration(
+      labelText: label,
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xFFF28D16), width: 2),
+      ),
+      floatingLabelStyle: const TextStyle(color: Color(0xFFF28D16)),
+    );
   }
 
   @override
@@ -961,339 +973,485 @@ class _RegisterScreenState extends State<RegisterScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Color(0xFFF28D16)),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-            );
-          },
+          onPressed: _prevStep,
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Crear cuenta',
-                  style: TextStyle(
-                    fontFamily: 'Gilroy',
-                    fontSize: 32,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xFFF28D16),
+        child: Column(
+          children: [
+            // Progress bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Paso ${_currentStep + 1} de $_totalSteps',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey.shade500,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 24),
-                _buildDropdownField(
-                  label: 'Tipo de documento',
-                  value: _selectedDocumentType,
-                  items: const ['CC', 'CE', 'NIT', 'PASAPORTE'],
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedDocumentType = value!;
-                    });
-                  },
-                ),
-                _buildTextField(
-                  controller: _documentNumberController,
-                  label: 'Número de documento',
-                  icon: Icons.badge_outlined,
-                  keyboardType: TextInputType.number,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildTextField(
-                        controller: _firstNameController,
-                        label: 'Primer nombre',
-                        icon: Icons.person_outline,
+                  const SizedBox(height: 8),
+                  Row(
+                    children: List.generate(_totalSteps, (i) {
+                      return Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(right: i < _totalSteps - 1 ? 6 : 0),
+                          height: 4,
+                          decoration: BoxDecoration(
+                            color: i <= _currentStep
+                                ? const Color(0xFFF28D16)
+                                : Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 28),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: _buildCurrentStep(),
+              ),
+            ),
+            // Bottom buttons
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 12, 24, 28),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: _currentStep == _totalSteps - 1
+                          ? (_otpSent && _acceptTerms ? _finish : null)
+                          : (_currentStep == 1 ? _nextStep : _nextStep),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFF28D16),
+                        foregroundColor: Colors.white,
+                        elevation: 4,
+                        shadowColor: const Color(0xFFF28D16).withOpacity(0.4),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _buildTextField(
-                        controller: _secondNameController,
-                        label: 'Segundo nombre',
-                        icon: Icons.person_outline,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildTextField(
-                        controller: _lastNameController,
-                        label: 'Primer apellido',
-                        icon: Icons.person_outline,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _buildTextField(
-                        controller: _secondLastNameController,
-                        label: 'Segundo apellido',
-                        icon: Icons.person_outline,
-                      ),
-                    ),
-                  ],
-                ),
-                _buildPhoneField(),
-                _buildTextField(
-                  controller: _emailController,
-                  label: 'Correo',
-                  icon: Icons.email_outlined,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                _buildPasswordField(
-                  controller: _passwordController,
-                  label: 'Contraseña',
-                  obscure: _obscurePassword,
-                  onToggle: () {
-                    setState(() {
-                      _obscurePassword = !_obscurePassword;
-                    });
-                  },
-                ),
-                _buildPasswordField(
-                  controller: _confirmPasswordController,
-                  label: 'Repetir contraseña',
-                  obscure: _obscureConfirmPassword,
-                  onToggle: () {
-                    setState(() {
-                      _obscureConfirmPassword = !_obscureConfirmPassword;
-                    });
-                  },
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 24,
-                      height: 48,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Checkbox(
-                          value: _acceptTerms,
-                          onChanged: (value) {
-                            setState(() {
-                              _acceptTerms = value!;
-                            });
-                          },
-                          activeColor: const Color(0xFFF28D16),
+                      child: Text(
+                        _currentStep == _totalSteps - 1
+                            ? 'Crear mi cuenta'
+                            : 'Continuar',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _acceptTerms = !_acceptTerms;
-                          });
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey.shade600,
-                            ),
-                            children: const [
-                              TextSpan(text: 'Estoy de acuerdo con los '),
-                              TextSpan(
-                                text: 'Términos y condiciones',
-                                style: TextStyle(
-                                  color: Color(0xFFF28D16),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              TextSpan(text: ' y la '),
-                              TextSpan(
-                                text: 'Política de privacidad',
-                                style: TextStyle(
-                                  color: Color(0xFFF28D16),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              TextSpan(text: '.'),
-                            ],
+                  ),
+                  if (_currentStep == 1) ...[
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: TextButton(
+                        onPressed: _nextStep,
+                        child: const Text(
+                          'Omitir este paso',
+                          style: TextStyle(
+                            color: Color(0xFFF28D16),
+                            fontSize: 16,
                           ),
                         ),
                       ),
                     ),
                   ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCurrentStep() {
+    switch (_currentStep) {
+      case 0:
+        return _buildStep1();
+      case 1:
+        return _buildStep2();
+      case 2:
+        return _buildStep3();
+      case 3:
+        return _buildStep4();
+      default:
+        return const SizedBox();
+    }
+  }
+
+  Widget _buildStep1() {
+    return Form(
+      key: _step1Key,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Tu documento',
+            style: TextStyle(
+              fontFamily: 'Gilroy',
+              fontSize: 28,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFFF28D16),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Ingresa tu tipo y número de documento.',
+            style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
+          ),
+          const SizedBox(height: 28),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: DropdownButtonFormField<String>(
+              value: _selectedDocumentType,
+              decoration: _inputDecoration('Tipo de documento'),
+              items: const ['CC', 'CE', 'NIT', 'PASAPORTE']
+                  .map((item) => DropdownMenuItem(value: item, child: Text(item)))
+                  .toList(),
+              onChanged: (value) => setState(() => _selectedDocumentType = value!),
+            ),
+          ),
+          TextFormField(
+            controller: _documentNumberController,
+            keyboardType: TextInputType.number,
+            decoration: _inputDecoration('Número de documento'),
+            validator: (value) =>
+                value == null || value.isEmpty ? 'Este campo es requerido' : null,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStep2() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Tus nombres',
+          style: TextStyle(
+            fontFamily: 'Gilroy',
+            fontSize: 28,
+            fontWeight: FontWeight.w800,
+            color: Color(0xFFF28D16),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          'Este paso es opcional, puedes omitirlo.',
+          style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
+        ),
+        const SizedBox(height: 28),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: TextFormField(
+            controller: _firstNameController,
+            decoration: _inputDecoration('Primer nombre'),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: TextFormField(
+            controller: _secondNameController,
+            decoration: _inputDecoration('Segundo nombre'),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: TextFormField(
+            controller: _lastNameController,
+            decoration: _inputDecoration('Primer apellido'),
+          ),
+        ),
+        TextFormField(
+          controller: _secondLastNameController,
+          decoration: _inputDecoration('Segundo apellido'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStep3() {
+    return Form(
+      key: _step3Key,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Crea tu contraseña',
+            style: TextStyle(
+              fontFamily: 'Gilroy',
+              fontSize: 28,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFFF28D16),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Usa al menos 6 caracteres.',
+            style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
+          ),
+          const SizedBox(height: 28),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: TextFormField(
+              controller: _passwordController,
+              obscureText: _obscurePassword,
+              decoration: _inputDecoration('Contraseña').copyWith(
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                    color: const Color(0xFFF28D16),
+                  ),
+                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                 ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: _register,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFF28D16),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) return 'Este campo es requerido';
+                if (value.length < 6) return 'Mínimo 6 caracteres';
+                return null;
+              },
+            ),
+          ),
+          TextFormField(
+            controller: _confirmPasswordController,
+            obscureText: _obscureConfirmPassword,
+            decoration: _inputDecoration('Repetir contraseña').copyWith(
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                  color: const Color(0xFFF28D16),
+                ),
+                onPressed: () =>
+                    setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) return 'Este campo es requerido';
+              if (value != _passwordController.text) return 'Las contraseñas no coinciden';
+              return null;
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStep4() {
+    return Form(
+      key: _step4Key,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Verifica tu identidad',
+            style: TextStyle(
+              fontFamily: 'Gilroy',
+              fontSize: 28,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFFF28D16),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Te enviaremos un código para confirmar tu cuenta.',
+            style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
+          ),
+          const SizedBox(height: 28),
+          // Method selector
+          Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => setState(() {
+                    _otpMethod = 'correo';
+                    _otpContactController.clear();
+                    _otpSent = false;
+                  }),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    decoration: BoxDecoration(
+                      color: _otpMethod == 'correo'
+                          ? const Color(0xFFF28D16)
+                          : Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: _otpMethod == 'correo'
+                            ? const Color(0xFFF28D16)
+                            : Colors.grey.shade300,
                       ),
                     ),
-                    child: const Text(
-                      'Registrarse',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    child: Center(
+                      child: Text(
+                        'Correo',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                          color: _otpMethod == 'correo' ? Colors.white : Colors.grey.shade600,
+                        ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('¿Ya tienes una cuenta? '),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Iniciar sesión'),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => setState(() {
+                    _otpMethod = 'celular';
+                    _otpContactController.clear();
+                    _otpSent = false;
+                  }),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    decoration: BoxDecoration(
+                      color: _otpMethod == 'celular'
+                          ? const Color(0xFFF28D16)
+                          : Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: _otpMethod == 'celular'
+                            ? const Color(0xFFF28D16)
+                            : Colors.grey.shade300,
+                      ),
                     ),
-                  ],
+                    child: Center(
+                      child: Text(
+                        'Celular',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                          color: _otpMethod == 'celular' ? Colors.white : Colors.grey.shade600,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 24),
-              ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: _otpContactController,
+                  keyboardType: _otpMethod == 'correo'
+                      ? TextInputType.emailAddress
+                      : TextInputType.phone,
+                  decoration: _inputDecoration(
+                    _otpMethod == 'correo' ? 'Correo electrónico' : 'Número de celular',
+                  ),
+                  validator: (value) =>
+                      value == null || value.isEmpty ? 'Este campo es requerido' : null,
+                ),
+              ),
+              const SizedBox(width: 10),
+              SizedBox(
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_otpContactController.text.isEmpty) return;
+                    setState(() => _otpSent = true);
+                    showToast(context, 'Código enviado a ${_otpContactController.text}', type: ToastType.success);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF1C2546),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                  ),
+                  child: const Text(
+                    'Enviar',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          if (_otpSent) ...[
+            const SizedBox(height: 20),
+            TextFormField(
+              controller: _otpCodeController,
+              keyboardType: TextInputType.number,
+              decoration: _inputDecoration('Código de verificación'),
+              validator: (value) =>
+                  value == null || value.isEmpty ? 'Ingresa el código recibido' : null,
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDropdownField({
-    required String label,
-    required String value,
-    required List<String> items,
-    required ValueChanged<String?> onChanged,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: DropdownButtonFormField<String>(
-        value: value,
-        decoration: InputDecoration(
-          labelText: label,
-          prefixIcon: const Icon(Icons.article_outlined, color: Color(0xFFF28D16)),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        items: items.map((item) {
-          return DropdownMenuItem(
-            value: item,
-            child: Text(item),
-          );
-        }).toList(),
-        onChanged: onChanged,
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        decoration: InputDecoration(
-          labelText: label,
-          prefixIcon: Icon(icon, color: const Color(0xFFF28D16)),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es requerido';
-          }
-          return null;
-        },
-      ),
-    );
-  }
-
-  Widget _buildPhoneField() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: TextFormField(
-        controller: _phoneController,
-        keyboardType: TextInputType.phone,
-        decoration: InputDecoration(
-          labelText: 'Celular',
-          prefixIcon: const Icon(Icons.phone_android, color: Color(0xFFF28D16)),
-          hintText: '(301) 000-0000',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        onChanged: (value) {
-          final formatted = _formatPhone(value);
-          if (formatted != value) {
-            _phoneController.text = formatted;
-            _phoneController.selection = TextSelection.fromPosition(
-              TextPosition(offset: formatted.length),
-            );
-          }
-        },
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es requerido';
-          }
-          return null;
-        },
-      ),
-    );
-  }
-
-  Widget _buildPasswordField({
-    required TextEditingController controller,
-    required String label,
-    required bool obscure,
-    required VoidCallback onToggle,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscure,
-        decoration: InputDecoration(
-          labelText: label,
-          prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFFF28D16)),
-          suffixIcon: IconButton(
-            icon: Icon(
-              obscure ? Icons.visibility_off : Icons.visibility,
-              color: const Color(0xFFF28D16),
+            const SizedBox(height: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  showToast(context, 'Código reenviado', type: ToastType.success);
+                },
+                child: const Text(
+                  '¿No recibiste el código? Reenviar',
+                  style: TextStyle(color: Color(0xFFF28D16)),
+                ),
+              ),
             ),
-            onPressed: onToggle,
+          ],
+          const SizedBox(height: 24),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 24,
+                height: 24,
+                child: Checkbox(
+                  value: _acceptTerms,
+                  activeColor: const Color(0xFFF28D16),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                  onChanged: (value) => setState(() => _acceptTerms = value!),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => setState(() => _acceptTerms = !_acceptTerms),
+                  child: RichText(
+                    text: TextSpan(
+                      style: TextStyle(fontSize: 13, color: Colors.grey.shade600, height: 1.4),
+                      children: const [
+                        TextSpan(text: 'Estoy de acuerdo con los '),
+                        TextSpan(
+                          text: 'Términos y condiciones',
+                          style: TextStyle(color: Color(0xFFF28D16), fontWeight: FontWeight.w600),
+                        ),
+                        TextSpan(text: ' y la '),
+                        TextSpan(
+                          text: 'Política de privacidad',
+                          style: TextStyle(color: Color(0xFFF28D16), fontWeight: FontWeight.w600),
+                        ),
+                        TextSpan(text: '.'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es requerido';
-          }
-          if (value.length < 6) {
-            return 'La contraseña debe tener al menos 6 caracteres';
-          }
-          return null;
-        },
+        ],
       ),
     );
   }
@@ -1389,12 +1547,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   Future<void> _verifyCode() async {
     if (_fullCode.length != 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Por favor ingresa el código de 6 dígitos'),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
+      showToast(context, 'Por favor ingresa el código de 6 dígitos', type: ToastType.error);
       return;
     }
 
@@ -1727,12 +1880,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         _resendTimer = 60;
                       });
                       _startResendTimer();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Código reenviado'),
-                          behavior: SnackBarBehavior.floating,
-                        ),
-                      );
+                      showToast(context, 'Código reenviado', type: ToastType.success);
                     },
                     icon: const Icon(Icons.refresh, color: Color(0xFF306EE8)),
                     label: const Text(
@@ -1961,40 +2109,89 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex],
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.white,
+      bottomNavigationBar: AppBottomNav(
         selectedIndex: _selectedIndex,
-        indicatorColor: const Color(0xFF306EE8).withAlpha(26),
-        onDestinationSelected: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        destinations: [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined, color: const Color(0xFF94A3B8)),
-            selectedIcon: Icon(Icons.home, color: const Color(0xFF306EE8)),
-            label: 'Inicio',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.list_alt_outlined, color: const Color(0xFF94A3B8)),
-            selectedIcon: Icon(Icons.list_alt, color: const Color(0xFF306EE8)),
-            label: 'Mis Créditos',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.payment_outlined, color: const Color(0xFF94A3B8)),
-            selectedIcon: Icon(Icons.payment, color: const Color(0xFF306EE8)),
-            label: 'Pagar',
-          ),
-          NavigationDestination(
-            icon: Badge(
-              isLabelVisible: false,
-              child: Icon(Icons.person_outline, color: const Color(0xFF94A3B8)),
-            ),
-            selectedIcon: Icon(Icons.person, color: const Color(0xFF306EE8)),
-            label: 'Perfil',
-          ),
+        onTap: (i) => setState(() => _selectedIndex = i),
+      ),
+    );
+  }
+}
+
+class _AppNavItem {
+  final IconData icon;
+  final IconData activeIcon;
+  final String label;
+  const _AppNavItem({required this.icon, required this.activeIcon, required this.label});
+}
+
+class AppBottomNav extends StatelessWidget {
+  final int selectedIndex;
+  final ValueChanged<int> onTap;
+
+  const AppBottomNav({super.key, required this.selectedIndex, required this.onTap});
+
+  static const _items = [
+    _AppNavItem(icon: Icons.home_outlined, activeIcon: Icons.home_rounded, label: 'Inicio'),
+    _AppNavItem(icon: Icons.credit_card_outlined, activeIcon: Icons.credit_card, label: 'Mis créditos'),
+    _AppNavItem(icon: Icons.payments_outlined, activeIcon: Icons.payments_rounded, label: 'Pagar'),
+    _AppNavItem(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded, label: 'Perfil'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: 24, offset: const Offset(0, -6)),
         ],
+      ),
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(_items.length, (i) {
+              final item = _items[i];
+              final isActive = i == selectedIndex;
+              return GestureDetector(
+                onTap: () => onTap(i),
+                behavior: HitTestBehavior.opaque,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  padding: EdgeInsets.symmetric(horizontal: isActive ? 20 : 14, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: isActive ? const Color(0xFFF28D16) : Colors.transparent,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        isActive ? item.activeIcon : item.icon,
+                        color: isActive ? Colors.white : Colors.grey.shade400,
+                        size: 24,
+                      ),
+                      if (isActive) ...[
+                        const SizedBox(width: 8),
+                        Text(
+                          item.label,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              );
+            }),
+          ),
+        ),
       ),
     );
   }
@@ -2010,6 +2207,19 @@ class HomeContent extends StatefulWidget {
 class _HomeContentState extends State<HomeContent> {
   int _currentPage = 0;
   final List<CreditData> _credits = CreditService.getCredits();
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -2061,8 +2271,9 @@ class _HomeContentState extends State<HomeContent> {
     return Column(
       children: [
         SizedBox(
-          height: 280,
+          height: 290,
           child: PageView.builder(
+            controller: _pageController,
             itemCount: _credits.length,
             onPageChanged: (index) {
               setState(() {
@@ -2081,9 +2292,11 @@ class _HomeContentState extends State<HomeContent> {
             _credits.length,
             (index) => GestureDetector(
               onTap: () {
-                setState(() {
-                  _currentPage = index;
-                });
+                _pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
@@ -2105,156 +2318,157 @@ class _HomeContentState extends State<HomeContent> {
   }
 
   Widget _buildPaymentCard(BuildContext context, CreditData credit) {
-    return Card(
-      color: Colors.white,
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: credit.isOverdue
+            ? Border.all(color: Colors.red.shade400, width: 1.5)
+            : Border.all(color: Colors.grey.shade200, width: 1),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 16, offset: const Offset(0, 4)),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Factura + estado
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          credit.name,
-                          style: TextStyle(
-                            color: Colors.grey.shade600,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: credit.statusBgColor,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            credit.status,
-                            style: TextStyle(
-                              color: credit.statusColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF28D16).withAlpha(26),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        credit.invoice,
-                        style: const TextStyle(
-                          color: Color(0xFFF28D16),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFF3E0),
+                    color: const Color(0xFFF28D16).withAlpha(26),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    'Faltan ${credit.daysLeft} días',
-                    style: TextStyle(
-                      color: Colors.orange.shade800,
+                    credit.invoice,
+                    style: const TextStyle(
+                      color: Color(0xFFF28D16),
                       fontWeight: FontWeight.bold,
-                      fontSize: 11,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: credit.isOverdue ? Colors.red : credit.statusBgColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    credit.displayStatus,
+                    style: TextStyle(
+                      color: credit.isOverdue ? Colors.white : credit.statusColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
+            // Etiqueta de monto
             Text(
-              'Cuota ${credit.currentQuota} de ${credit.totalQuotas}',
-              style: const TextStyle(
-                color: Color(0xFF1C2546),
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
+              credit.isOverdue ? 'Valor vencido' : 'A pagar en esta cuota:',
+              style: TextStyle(
+                color: credit.isOverdue ? Colors.red : Colors.grey.shade500,
+                fontSize: 12,
+                fontWeight: credit.isOverdue ? FontWeight.w600 : FontWeight.normal,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 2),
             Text(
               CreditService.formatFullCurrency(credit.quotaAmount),
-              style: const TextStyle(
-                color: Color(0xFF1C2546),
-                fontSize: 32,
+              style: TextStyle(
+                color: credit.isOverdue ? Colors.red : const Color(0xFF1C2546),
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8),
+            // Cuota actual + fecha límite
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Icon(
-                  Icons.calendar_today,
-                  size: 16,
-                  color: Color(0xFF575756),
-                ),
-                const SizedBox(width: 8),
                 Text(
-                  'Fecha límite: ${credit.nextDueDate}',
-                  style: const TextStyle(
-                    color: Color(0xFF575756),
-                    fontSize: 13,
+                  'Vas en la cuota ${credit.currentQuota} de ${credit.totalQuotas}',
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                ),
+                Text(
+                  'Límite: ${credit.nextDueDate}',
+                  style: TextStyle(
+                    color: credit.isOverdue ? Colors.red : Colors.grey.shade600,
+                    fontSize: 12,
+                    fontWeight: credit.isOverdue ? FontWeight.w600 : FontWeight.normal,
                   ),
                 ),
               ],
             ),
-            const Spacer(),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFF59E0B),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PaymentScreen(preselectedCredit: credit),
-                        ),
-                      );
-                    },
-                    child: const Text('Pagar ahora'),
+            if (credit.isOverdue) ...[
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Icon(Icons.warning_amber_rounded, color: Colors.red.shade600, size: 13),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${credit.daysLeft.abs()} ${credit.daysLeft.abs() == 1 ? 'día' : 'días'} vencido${credit.daysLeft.abs() == 1 ? '' : 's'} · Paga para evitar más intereses',
+                    style: TextStyle(color: Colors.red.shade600, fontSize: 11, fontWeight: FontWeight.w500),
                   ),
+                ],
+              ),
+            ],
+            const Spacer(),
+            // CTA principal
+            SizedBox(
+              width: double.infinity,
+              height: 46,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: credit.isOverdue ? Colors.red : const Color(0xFFF28D16),
+                  foregroundColor: credit.isOverdue ? Colors.white : const Color(0xFF1C2546),
+                  elevation: 4,
+                  shadowColor: (credit.isOverdue ? Colors.red : const Color(0xFFF28D16)).withOpacity(0.4),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(width: 12),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CreditDetailScreen(
-                          creditId: credit.id,
-                          status: credit.status,
-                          statusColor: credit.statusColor,
-                          statusBgColor: credit.statusBgColor,
-                        ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PaymentScreen(preselectedCredit: credit),
+                    ),
+                  );
+                },
+                child: Text(credit.isOverdue ? 'Pagar ahora' : 'Pagar ahora'),
+              ),
+            ),
+            const SizedBox(height: 6),
+            // Enlace secundario
+            Center(
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreditDetailScreen(
+                        creditId: credit.id,
+                        status: credit.status,
+                        statusColor: credit.statusColor,
+                        statusBgColor: credit.statusBgColor,
                       ),
-                    );
-                  },
-                  child: const Text('Ver detalles'),
+                    ),
+                  );
+                },
+                child: Text(
+                  'Ver detalles',
+                  style: TextStyle(color: Colors.grey.shade500, fontSize: 13),
                 ),
-              ],
+              ),
             ),
           ],
         ),
@@ -2295,7 +2509,7 @@ class _HomeContentState extends State<HomeContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Mis créditos activos',
+                      'Mis créditos',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -2408,23 +2622,30 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
     _credits = CreditService.getCredits();
-    _selectedCredit = widget.preselectedCredit ?? _credits.first;
+    if (widget.preselectedCredit != null) {
+      _selectedCredit = _credits.firstWhere(
+        (c) => c.id == widget.preselectedCredit!.id,
+        orElse: () => _credits.first,
+      );
+    } else {
+      _selectedCredit = _credits.first;
+    }
   }
 
   List<Map<String, dynamic>> get _paymentOptions {
     return [
       {
-        'title': 'Pago mínimo',
+        'title': 'Paga la cuota de este mes',
         'amount': _selectedCredit.quotaAmount,
         'subtitle': 'Cuota actual',
       },
       {
-        'title': 'Saldo vencido',
+        'title': 'Paga las cuotas vencidas',
         'amount': _selectedCredit.status == 'Vencido' ? _selectedCredit.quotaAmount : 0,
         'subtitle': 'Mora acumulada',
       },
       {
-        'title': 'Pago total',
+        'title': 'Paga todo el crédito',
         'amount': _selectedCredit.remainingAmount,
         'subtitle': 'Liquidar crédito',
       },
@@ -2447,6 +2668,131 @@ class _PaymentScreenState extends State<PaymentScreen> {
     setState(() {
       _selectedOption = index;
     });
+  }
+
+  Widget _buildSelectedCreditCard() {
+    final credit = _selectedCredit;
+    final List<Color> gradientColors = credit.isOverdue
+        ? [Colors.red.shade600, Colors.red.shade400]
+        : credit.status == 'Al día'
+            ? [const Color(0xFF22C55E), const Color(0xFF4ADE80)]
+            : [const Color(0xFFF59E0B), const Color(0xFFFBBF24)];
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: credit.isOverdue ? Border.all(color: Colors.red.shade400, width: 1.5) : null,
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 16, offset: const Offset(0, 4)),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                credit.name,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1C2546)),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                decoration: BoxDecoration(
+                  color: credit.isOverdue ? Colors.red : credit.statusBgColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  credit.displayStatus,
+                  style: TextStyle(
+                    color: credit.isOverdue ? Colors.white : credit.statusColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${(credit.progressPercentage * 100).round()}%',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: credit.statusColor),
+              ),
+              Text(
+                'Vas en la cuota ${credit.currentQuota} de ${credit.totalQuotas}',
+                style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Stack(
+              children: [
+                Container(height: 12, decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(8))),
+                FractionallySizedBox(
+                  widthFactor: credit.progressPercentage,
+                  child: Container(
+                    height: 12,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: gradientColors),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(color: Colors.grey.shade50, borderRadius: BorderRadius.circular(12)),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        credit.isOverdue ? 'Valor vencido' : 'A pagar en esta cuota:',
+                        style: TextStyle(fontSize: 11, color: credit.isOverdue ? Colors.red : Colors.grey.shade600, fontWeight: credit.isOverdue ? FontWeight.w600 : FontWeight.normal),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        CreditService.formatFullCurrency(credit.quotaAmount),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: credit.isOverdue ? Colors.red : const Color(0xFF1C2546)),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(width: 1, height: 40, color: Colors.grey.shade300),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Fecha límite', style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                      const SizedBox(height: 4),
+                      Text(
+                        credit.nextDueDate,
+                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: credit.isOverdue ? Colors.red : const Color(0xFF1C2546)),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -2530,69 +2876,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            Card(
-              color: const Color(0xFFF3F4F6),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF28D16).withAlpha(26),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text(
-                            _selectedCredit.invoice,
-                            style: const TextStyle(
-                              color: Color(0xFFF28D16),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFFF3E0),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            'Faltan ${_selectedCredit.daysLeft} días',
-                            style: const TextStyle(
-                              color: Color(0xFFE65100),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Fecha límite de pago',
-                      style: TextStyle(
-                        color: Color(0xFF575756),
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      _selectedCredit.nextDueDate,
-                      style: const TextStyle(
-                        color: Color(0xFF1C2546),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            _buildSelectedCreditCard(),
             const SizedBox(height: 24),
             const Text(
               'Selecciona el monto a pagar',
@@ -3398,6 +3682,7 @@ class CreditData {
   final String startDate;
   final String endDate;
   final String interestRate;
+  final int paymentDay;
   final List<QuotaData> quotas;
 
   CreditData({
@@ -3417,6 +3702,7 @@ class CreditData {
     required this.startDate,
     required this.endDate,
     required this.interestRate,
+    required this.paymentDay,
     required this.quotas,
   });
 
@@ -3424,9 +3710,101 @@ class CreditData {
   double get remainingAmount => totalAmount - paidAmount;
   double get progressPercentage => paidAmount / totalAmount;
   int get remainingQuotas => totalQuotas - paidQuotas;
+  bool get isOverdue => status == 'Vencido';
+  String get displayStatus {
+    switch (status) {
+      case 'Vencido': return '¡Págalo hoy!';
+      case 'Por pagar': return 'Paga pronto';
+      default: return status;
+    }
+  }
 }
 
 class CreditService {
+  static List<QuotaData> _generateQuotas({
+    required int fromQuota,
+    required int toQuota,
+    required double amount,
+    required int paymentDay,
+    required String prefix,
+    required String startDate,
+    required String creditStatus,
+  }) {
+    final months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    final List<QuotaData> quotas = [];
+    
+    DateTime currentDate;
+    try {
+      final parts = startDate.split(' ');
+      final monthIndex = months.indexOf(parts[0]) + 1;
+      final year = int.parse(parts[2]);
+      currentDate = DateTime(year, monthIndex, paymentDay);
+    } catch (e) {
+      currentDate = DateTime.now();
+    }
+
+    Color labelColor;
+    if (creditStatus == 'Vencido') {
+      labelColor = Colors.red;
+    } else if (creditStatus == 'Al día') {
+      labelColor = Colors.green;
+    } else {
+      labelColor = const Color(0xFFF59E0B);
+    }
+
+    for (int i = fromQuota; i <= toQuota; i++) {
+      final dueDate = DateTime(currentDate.year, currentDate.month + (i - fromQuota), paymentDay);
+      final monthName = months[dueDate.month - 1];
+      final dueDateStr = '$paymentDay $monthName ${dueDate.year}';
+      
+      String status;
+      Color statusColor;
+      Color statusBgColor;
+      double lateInterest = 0;
+      int lateInterestDays = 0;
+
+      if (i < fromQuota) {
+        status = 'Pagado';
+        statusColor = Colors.green;
+        statusBgColor = Colors.green.withAlpha(26);
+      } else if (i == fromQuota) {
+        if (creditStatus == 'Vencido' && dueDate.isBefore(DateTime.now())) {
+          status = 'Pendiente de pago';
+          statusColor = Colors.red;
+          statusBgColor = Colors.red.withAlpha(26);
+          lateInterest = amount * 0.025;
+          lateInterestDays = DateTime.now().difference(dueDate).inDays;
+        } else if (creditStatus == 'Al día') {
+          status = 'Al día';
+          statusColor = Colors.green;
+          statusBgColor = Colors.green.withAlpha(26);
+        } else {
+          status = 'Por pagar';
+          statusColor = const Color(0xFFF59E0B);
+          statusBgColor = const Color(0xFFFEF3C7);
+        }
+      } else {
+        status = 'Próxima';
+        statusColor = Colors.grey;
+        statusBgColor = Colors.grey.withAlpha(26);
+      }
+
+      quotas.add(QuotaData(
+        number: i,
+        amount: amount,
+        dueDate: dueDateStr,
+        status: status,
+        statusColor: statusColor,
+        statusBgColor: statusBgColor,
+        invoice: '$prefix-Q$i',
+        lateInterest: lateInterest,
+        lateInterestDays: lateInterestDays,
+      ));
+    }
+
+    return quotas;
+  }
+
   static List<CreditData> getCredits() {
     return [
       CreditData(
@@ -3436,47 +3814,26 @@ class CreditService {
         statusColor: Colors.red,
         statusBgColor: Colors.red.withAlpha(26),
         totalAmount: 4500000,
-        paidAmount: 1050000,
+        paidAmount: 2100000,
         totalQuotas: 24,
         paidQuotas: 6,
-        currentQuota: 9,
+        currentQuota: 7,
         quotaAmount: 350000,
         nextDueDate: '15 Mar 2026',
         daysLeft: -2,
         startDate: '15 Sep 2025',
         endDate: '15 Sep 2027',
         interestRate: '2.5% mensual',
-        quotas: [
-          QuotaData(
-            number: 9,
-            amount: 350000,
-            dueDate: '15 Feb 2026',
-            status: 'Vencido',
-            statusColor: Colors.red,
-            statusBgColor: Colors.red.withAlpha(26),
-            invoice: 'MCSCR-3216-Q9',
-            lateInterest: 8750,
-            lateInterestDays: 2,
-          ),
-          QuotaData(
-            number: 10,
-            amount: 350000,
-            dueDate: '15 Mar 2026',
-            status: 'Por pagar',
-            statusColor: Colors.green,
-            statusBgColor: Colors.green.withAlpha(26),
-            invoice: 'MCSCR-3216-Q10',
-          ),
-          QuotaData(
-            number: 11,
-            amount: 350000,
-            dueDate: '15 Abr 2026',
-            status: 'Pendiente',
-            statusColor: Colors.grey,
-            statusBgColor: Colors.grey.withAlpha(26),
-            invoice: 'MCSCR-3216-Q11',
-          ),
-        ],
+        paymentDay: 15,
+        quotas: _generateQuotas(
+          fromQuota: 7,
+          toQuota: 24,
+          amount: 350000,
+          paymentDay: 15,
+          prefix: 'MCSCR-3216',
+          startDate: '15 Sep 2025',
+          creditStatus: 'Vencido',
+        ),
       ),
       CreditData(
         id: '67890',
@@ -3495,35 +3852,16 @@ class CreditService {
         startDate: '20 Oct 2025',
         endDate: '20 Oct 2026',
         interestRate: '2.5% mensual',
-        quotas: [
-          QuotaData(
-            number: 5,
-            amount: 180000,
-            dueDate: '20 Mar 2026',
-            status: 'Por pagar',
-            statusColor: Colors.green,
-            statusBgColor: Colors.green.withAlpha(26),
-            invoice: 'MCSCR-7821-Q5',
-          ),
-          QuotaData(
-            number: 6,
-            amount: 180000,
-            dueDate: '20 Abr 2026',
-            status: 'Pendiente',
-            statusColor: Colors.grey,
-            statusBgColor: Colors.grey.withAlpha(26),
-            invoice: 'MCSCR-7821-Q6',
-          ),
-          QuotaData(
-            number: 7,
-            amount: 180000,
-            dueDate: '20 May 2026',
-            status: 'Pendiente',
-            statusColor: Colors.grey,
-            statusBgColor: Colors.grey.withAlpha(26),
-            invoice: 'MCSCR-7821-Q7',
-          ),
-        ],
+        paymentDay: 20,
+        quotas: _generateQuotas(
+          fromQuota: 9,
+          toQuota: 12,
+          amount: 180000,
+          paymentDay: 20,
+          prefix: 'MCSCR-7821',
+          startDate: '20 Oct 2025',
+          creditStatus: 'Por pagar',
+        ),
       ),
       CreditData(
         id: '54321',
@@ -3542,35 +3880,16 @@ class CreditService {
         startDate: '25 Jun 2025',
         endDate: '25 Jun 2028',
         interestRate: '2.5% mensual',
-        quotas: [
-          QuotaData(
-            number: 13,
-            amount: 250000,
-            dueDate: '25 Mar 2026',
-            status: 'Por pagar',
-            statusColor: Colors.green,
-            statusBgColor: Colors.green.withAlpha(26),
-            invoice: 'MCMT-1102-Q13',
-          ),
-          QuotaData(
-            number: 14,
-            amount: 250000,
-            dueDate: '25 Abr 2026',
-            status: 'Pendiente',
-            statusColor: Colors.grey,
-            statusBgColor: Colors.grey.withAlpha(26),
-            invoice: 'MCMT-1102-Q14',
-          ),
-          QuotaData(
-            number: 15,
-            amount: 250000,
-            dueDate: '25 May 2026',
-            status: 'Pendiente',
-            statusColor: Colors.grey,
-            statusBgColor: Colors.grey.withAlpha(26),
-            invoice: 'MCMT-1102-Q15',
-          ),
-        ],
+        paymentDay: 25,
+        quotas: _generateQuotas(
+          fromQuota: 28,
+          toQuota: 36,
+          amount: 250000,
+          paymentDay: 25,
+          prefix: 'MCMT-1102',
+          startDate: '25 Jun 2025',
+          creditStatus: 'Al día',
+        ),
       ),
     ];
   }
@@ -3738,12 +4057,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         notification.isRead = true;
       }
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Todas las notificaciones marcadas como leídas'),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+    showToast(context, 'Todas las notificaciones marcadas como leídas', type: ToastType.success);
   }
 
   void _markAsRead(String id) {
@@ -4024,27 +4338,114 @@ class CreditsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final credits = CreditService.getCredits();
+    final totalMonthly = credits.fold<double>(0, (sum, c) => sum + c.quotaAmount);
+    final hasOverdue = credits.any((c) => c.isOverdue);
+    final overdueCount = credits.where((c) => c.isOverdue).length;
+    final minDaysLeft = credits
+        .where((c) => !c.isOverdue)
+        .fold<int?>(null, (min, c) => min == null || c.daysLeft < min ? c.daysLeft : min);
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF8F9FA),
       appBar: AppBar(
-        title: const Text('Mis Créditos'),
+        title: const Text('Mis créditos'),
         backgroundColor: Colors.white,
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: credits.length,
-        itemBuilder: (context, index) {
-          return _buildCreditCard(context, credits[index]);
-        },
+      body: Column(
+        children: [
+          // Header resumen global
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+            child: Row(
+              children: [
+                _buildMetric(
+                  label: 'Créditos activos',
+                  value: '${credits.length}',
+                  icon: Icons.credit_card,
+                  color: const Color(0xFF1C2546),
+                ),
+                const SizedBox(width: 1),
+                _buildMetric(
+                  label: 'Cuota total del mes',
+                  value: CreditService.formatFullCurrency(totalMonthly),
+                  icon: Icons.payments_outlined,
+                  color: const Color(0xFFF28D16),
+                ),
+                const SizedBox(width: 1),
+                _buildMetric(
+                  label: hasOverdue ? 'Vencidos' : 'Próximo vencimiento',
+                  value: hasOverdue
+                      ? '$overdueCount ${overdueCount == 1 ? 'crédito' : 'créditos'}'
+                      : minDaysLeft == null
+                          ? 'Al día'
+                          : minDaysLeft == 0
+                              ? 'Hoy'
+                              : 'En $minDaysLeft ${minDaysLeft == 1 ? 'día' : 'días'}',
+                  icon: hasOverdue ? Icons.warning_amber_rounded : Icons.event_outlined,
+                  color: hasOverdue ? Colors.red : minDaysLeft != null && minDaysLeft <= 5 ? const Color(0xFFF59E0B) : Colors.green,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 4),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: credits.length,
+              itemBuilder: (context, index) => _buildCreditCard(context, credits[index]),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMetric({required String label, required String value, required IconData icon, required Color color}) {
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.07),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, color: color, size: 18),
+            const SizedBox(height: 4),
+            Text(value, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 14)),
+            Text(label, style: TextStyle(color: Colors.grey.shade600, fontSize: 10)),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildCreditCard(BuildContext context, CreditData credit) {
-    return Card(
-      color: Colors.white,
-      elevation: 1,
+    final List<Color> gradientColors = credit.isOverdue
+        ? [Colors.red.shade600, Colors.red.shade400]
+        : credit.status == 'Al día'
+            ? [const Color(0xFF22C55E), const Color(0xFF4ADE80)]
+            : [const Color(0xFFF59E0B), const Color(0xFFFBBF24)];
+
+    return Container(
       margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: credit.isOverdue
+            ? Border.all(color: Colors.red.shade400, width: 1.5)
+            : null,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -4061,88 +4462,188 @@ class CreditsListScreen extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(16),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Nombre + badge
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     credit.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF1C2546)),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                     decoration: BoxDecoration(
-                      color: credit.statusBgColor,
+                      color: credit.isOverdue ? Colors.red : credit.statusBgColor,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      credit.status,
+                      credit.displayStatus,
                       style: TextStyle(
-                        color: credit.statusColor,
+                        color: credit.isOverdue ? Colors.white : credit.statusColor,
                         fontWeight: FontWeight.bold,
+                        fontSize: 12,
                       ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: credit.progressPercentage,
-                  backgroundColor: Colors.grey.shade200,
-                  valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF306EE8)),
-                  minHeight: 8,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Cuota ${credit.currentQuota} de ${credit.totalQuotas}',
-                style: TextStyle(color: Colors.grey.shade600),
-              ),
-              const Divider(height: 24),
+              // Porcentaje + cuotas
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Próxima cuota',
-                        style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-                      ),
-                      Text(
-                        CreditService.formatFullCurrency(credit.quotaAmount),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    '${(credit.progressPercentage * 100).round()}%',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: credit.statusColor,
+                    ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Fecha límite',
-                        style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-                      ),
-                      Text(
-                        credit.nextDueDate,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'Vas en la cuota ${credit.currentQuota} de ${credit.totalQuotas}',
+                    style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                   ),
                 ],
+              ),
+              const SizedBox(height: 10),
+              // Barra con gradiente
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 12,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    FractionallySizedBox(
+                      widthFactor: credit.progressPercentage,
+                      child: Container(
+                        height: 12,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: gradientColors),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Sección de métricas (mismo estilo que Progreso del crédito)
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            credit.isOverdue ? 'Valor vencido' : 'Próxima cuota',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: credit.isOverdue ? Colors.red : Colors.grey.shade600,
+                              fontWeight: credit.isOverdue ? FontWeight.w600 : FontWeight.normal,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            CreditService.formatFullCurrency(credit.quotaAmount),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: credit.isOverdue ? Colors.red : const Color(0xFF1C2546),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(width: 1, height: 40, color: Colors.grey.shade300),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Fecha límite',
+                            style: TextStyle(fontSize: 11, color: Colors.grey.shade600),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            credit.nextDueDate,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: credit.isOverdue ? Colors.red : const Color(0xFF1C2546),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+              if (credit.isOverdue) ...[
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade50,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.red.shade200),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.warning_amber_rounded, color: Colors.red.shade700, size: 16),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          '${credit.daysLeft.abs()} ${credit.daysLeft.abs() == 1 ? 'día' : 'días'} vencido${credit.daysLeft.abs() == 1 ? '' : 's'} · Paga para evitar más intereses',
+                          style: TextStyle(color: Colors.red.shade700, fontSize: 12, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
+              // Botón pagar
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: credit.isOverdue ? Colors.red : const Color(0xFFF28D16),
+                    foregroundColor: credit.isOverdue ? Colors.white : const Color(0xFF1C2546),
+                    elevation: 2,
+                    shadowColor: (credit.isOverdue ? Colors.red : const Color(0xFFF28D16)).withOpacity(0.4),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PaymentScreen(preselectedCredit: credit),
+                      ),
+                    );
+                  },
+                  child: Text(credit.isOverdue ? 'Pagar ahora' : 'Pagar'),
+                ),
               ),
             ],
           ),
@@ -4174,37 +4675,9 @@ class _CreditsScreenWithNavState extends State<CreditsScreenWithNav> {
           ProfileScreen(),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.white,
+      bottomNavigationBar: AppBottomNav(
         selectedIndex: _selectedIndex,
-        indicatorColor: const Color(0xFF306EE8).withAlpha(26),
-        onDestinationSelected: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined, color: Color(0xFF94A3B8)),
-            selectedIcon: Icon(Icons.home, color: Color(0xFF306EE8)),
-            label: 'Inicio',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.list_alt_outlined, color: Color(0xFF94A3B8)),
-            selectedIcon: Icon(Icons.list_alt, color: Color(0xFF306EE8)),
-            label: 'Mis Créditos',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.payment_outlined, color: Color(0xFF94A3B8)),
-            selectedIcon: Icon(Icons.payment, color: Color(0xFF306EE8)),
-            label: 'Pagar',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline, color: Color(0xFF94A3B8)),
-            selectedIcon: Icon(Icons.person, color: Color(0xFF306EE8)),
-            label: 'Perfil',
-          ),
-        ],
+        onTap: (i) => setState(() => _selectedIndex = i),
       ),
     );
   }
@@ -4378,8 +4851,8 @@ class CreditDetailScreen extends StatefulWidget {
 }
 
 class _CreditDetailScreenState extends State<CreditDetailScreen> {
-  bool _detailsExpanded = true;
   int _expandedPaymentIndex = 0;
+  bool _detailsExpanded = false;
   late CreditData _credit;
 
   @override
@@ -4398,29 +4871,40 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
         title: Text(_credit.name),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.history),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const PaymentHistoryScreen(),
-                ),
-              );
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (_credit.isOverdue) ...[
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade50,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.red.shade200),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.warning_amber_rounded, color: Colors.red.shade700, size: 20),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'Este crédito tiene ${_credit.daysLeft.abs()} ${_credit.daysLeft.abs() == 1 ? 'día' : 'días'} vencido${_credit.daysLeft.abs() == 1 ? '' : 's'}. Realiza tu pago para evitar intereses adicionales.',
+                        style: TextStyle(color: Colors.red.shade700, fontSize: 13, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
             _buildMainCard(),
             const SizedBox(height: 16),
             _buildPayButton(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
             _buildProgressSection(),
             const SizedBox(height: 20),
             _buildDetailsSection(),
@@ -4434,25 +4918,31 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
   }
 
   Widget _buildMainCard() {
+    final invoice = _credit.quotas.isNotEmpty ? _credit.quotas.first.invoice : 'Sin referencia';
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
+        border: _credit.isOverdue
+            ? Border.all(color: Colors.red.shade400, width: 1.5)
+            : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withAlpha(26),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Nombre + badge
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: Column(
@@ -4460,33 +4950,26 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                   children: [
                     Text(
                       _credit.name,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1C2546),
-                      ),
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF1C2546)),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
-                      _credit.quotas.isNotEmpty ? _credit.quotas.first.invoice : 'Sin referencia',
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 13,
-                      ),
+                      invoice,
+                      style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                 decoration: BoxDecoration(
-                  color: _credit.statusBgColor,
+                  color: _credit.isOverdue ? Colors.red : _credit.statusBgColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  _credit.status,
+                  _credit.displayStatus,
                   style: TextStyle(
-                    color: _credit.statusColor,
+                    color: _credit.isOverdue ? Colors.white : _credit.statusColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),
@@ -4494,134 +4977,61 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
+          // Métricas: cuota + fecha
           Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFF28D16).withAlpha(26),
+              color: Colors.grey.shade50,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
               children: [
-                const Icon(
-                  Icons.payment,
-                  color: Color(0xFFF28D16),
-                  size: 28,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _credit.isOverdue ? 'Valor vencido' : 'A pagar en esta cuota:',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: _credit.isOverdue ? Colors.red : Colors.grey.shade600,
+                          fontWeight: _credit.isOverdue ? FontWeight.w600 : FontWeight.normal,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        CreditService.formatFullCurrency(_credit.quotaAmount),
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: _credit.isOverdue ? Colors.red : const Color(0xFF1C2546),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+                Container(width: 1, height: 40, color: Colors.grey.shade300),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Cuota por pagar',
-                        style: TextStyle(
-                          color: Color(0xFFF28D16),
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      Text('Fecha límite', style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                      const SizedBox(height: 4),
                       Text(
-                        'Cuota ${_credit.currentQuota} de ${_credit.totalQuotas} • Vence ${_credit.nextDueDate}',
+                        _credit.nextDueDate,
                         style: TextStyle(
-                          color: Colors.grey.shade700,
-                          fontSize: 13,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: _credit.isOverdue ? Colors.red : const Color(0xFF1C2546),
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Text(
-                  CreditService.formatFullCurrency(_credit.quotaAmount),
-                  style: const TextStyle(
-                    color: Color(0xFF1C2546),
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade50,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Total pagado',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        CreditService.formatFullCurrency(_credit.paidAmount),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        '${_credit.paidQuotas} de ${_credit.totalQuotas} cuotas pagadas',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.grey.shade500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade50,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Saldo total por pagar',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        CreditService.formatFullCurrency(_credit.remainingAmount),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF1C2546),
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        '${_credit.remainingQuotas} de ${_credit.totalQuotas} cuotas por pagar',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.grey.shade500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
           ),
         ],
       ),
@@ -4630,19 +5040,19 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
 
   Widget _buildProgressSection() {
     final progress = _credit.progressPercentage;
-    final paidAmount = _credit.paidAmount;
-    final totalAmount = _credit.totalAmount;
     final percentText = '${(progress * 100).round()}%';
+    final List<Color> gradientColors = _credit.isOverdue
+        ? [Colors.red.shade600, Colors.red.shade400]
+        : _credit.status == 'Al día'
+            ? [const Color(0xFF22C55E), const Color(0xFF4ADE80)]
+            : [const Color(0xFFF59E0B), const Color(0xFFFBBF24)];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
           'Progreso del crédito',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         Card(
@@ -4652,144 +5062,88 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Cuotas pagadas',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: '${_credit.paidQuotas}',
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: ' de ${_credit.totalQuotas}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey.shade600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            '${_credit.remainingQuotas} cuotas por pagar',
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: Colors.grey.shade500,
-                            ),
-                          ),
-                        ],
+                    Text(
+                      percentText,
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: _credit.statusColor,
                       ),
                     ),
                     Text(
-                      percentText,
-                      style: const TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF22C55E),
-                      ),
+                      'Vas en la cuota ${_credit.currentQuota} de ${_credit.totalQuotas}',
+                      style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 16),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Stack(
                     children: [
                       Container(
-                        height: 16,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                        height: 12,
+                        decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(8)),
                       ),
                       FractionallySizedBox(
                         widthFactor: progress,
                         child: Container(
-                          height: 16,
+                          height: 12,
                           decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xFF22C55E),
-                                Color(0xFF4ADE80),
-                              ],
-                            ),
+                            gradient: LinearGradient(colors: gradientColors),
                             borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color(0xFF22C55E).withAlpha(77),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Total pagado',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey.shade500,
-                          ),
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(color: Colors.grey.shade50, borderRadius: BorderRadius.circular(8)),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Total pagado', style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                            const SizedBox(height: 4),
+                            Text(
+                              CreditService.formatFullCurrency(_credit.paidAmount),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: _credit.statusColor),
+                            ),
+                          ],
                         ),
-                        Text(
-                          CreditService.formatFullCurrency(paidAmount),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF22C55E),
-                          ),
+                      ),
+                      Container(width: 1, height: 40, color: Colors.grey.shade300),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Saldo por pagar', style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                            const SizedBox(height: 4),
+                            Text(
+                              CreditService.formatFullCurrency(_credit.remainingAmount),
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF1C2546)),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Total del crédito',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey.shade500,
-                          ),
-                        ),
-                        Text(
-                          CreditService.formatFullCurrency(totalAmount),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF1C2546),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'Total del crédito: ${CreditService.formatFullCurrency(_credit.totalAmount)}',
+                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF1C2546)),
+                  ),
                 ),
               ],
             ),
@@ -4830,6 +5184,12 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
+                  _buildDetailRow('Valor total del crédito', CreditService.formatFullCurrency(_credit.totalAmount)),
+                  const Divider(height: 16),
+                  _buildDetailRow('Cantidad de cuotas', '${_credit.totalQuotas} cuotas'),
+                  const Divider(height: 16),
+                  _buildDetailRow('Día de pago', 'Día ${_credit.paymentDay} de cada mes'),
+                  const Divider(height: 16),
                   _buildDetailRow('Fecha de inicio', _credit.startDate),
                   const Divider(height: 16),
                   _buildDetailRow('Fecha de vencimiento', _credit.endDate),
@@ -4884,6 +5244,28 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
           final isExpanded = _expandedPaymentIndex == index;
           final isNext = index == 0;
           
+          String creditStatusLabel;
+          Color creditStatusColor;
+          Color creditStatusBgColor;
+          
+          if (_credit.status == 'Al día') {
+            creditStatusLabel = 'Al día';
+            creditStatusColor = Colors.green;
+            creditStatusBgColor = Colors.green.withAlpha(26);
+          } else if (_credit.status == 'Vencido') {
+            creditStatusLabel = 'Pendiente de pago';
+            creditStatusColor = Colors.red;
+            creditStatusBgColor = Colors.red.withAlpha(26);
+          } else {
+            creditStatusLabel = 'Por pagar';
+            creditStatusColor = const Color(0xFFF59E0B);
+            creditStatusBgColor = const Color(0xFFFEF3C7);
+          }
+
+          final isGray = !isNext;
+          final grayColor = Colors.grey.shade400;
+          final grayBgColor = Colors.grey.shade200;
+
           return Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: Card(
@@ -4902,7 +5284,7 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                             width: 4,
                             height: 50,
                             decoration: BoxDecoration(
-                              color: payment['statusColor'],
+                              color: isGray ? grayColor : creditStatusColor,
                               borderRadius: BorderRadius.circular(2),
                             ),
                           ),
@@ -4915,71 +5297,50 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                                   children: [
                                     Text(
                                       'Cuota ${payment['number']}',
-                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: isGray ? Colors.grey : Colors.black,
+                                      ),
                                     ),
-                                    if (isNext) ...[
-                                      const SizedBox(width: 8),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 2,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFF28D16).withAlpha(26),
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        child: const Text(
-                                          'Próxima',
-                                          style: TextStyle(
-                                            color: Color(0xFFF28D16),
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                    const SizedBox(width: 8),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 2,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: isGray ? grayBgColor : creditStatusBgColor,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Text(
+                                        isGray ? 'Pendiente' : creditStatusLabel,
+                                        style: TextStyle(
+                                          color: isGray ? grayColor : creditStatusColor,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ],
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'Vence: ${payment['dueDate']}',
+                                  'Fecha límite: ${payment['dueDate']}',
                                   style: TextStyle(
                                     color: Colors.grey.shade600,
-                                    fontSize: 13,
+                                    fontSize: 12,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                payment['amount'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 2,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: payment['statusBgColor'],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Text(
-                                  payment['status'],
-                                  style: TextStyle(
-                                    color: payment['statusColor'],
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
+                          Text(
+                            payment['amount'],
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: isGray ? Colors.grey : Colors.black,
+                            ),
                           ),
                           const SizedBox(width: 8),
                           Icon(
@@ -5001,23 +5362,17 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildPaymentDetailRow('Factura', payment['invoice']),
+                          _buildPaymentDetailRow('Valor de la cuota', payment['amount']),
+                          if ((payment['lateInterest'] as String).isNotEmpty && (payment['lateInterest'] as String) != '\$0') ...[
+                            const Divider(height: 16),
+                            _buildPaymentDetailRow('Interés de mora', payment['lateInterest']),
+                            const Divider(height: 16),
+                            _buildPaymentDetailRow('Días de interés de mora', '${payment['lateInterestDays']} días'),
+                          ],
                           const Divider(height: 16),
-                          _buildPaymentDetailRow('Valor total del crédito', payment['totalCredit']),
-                          const Divider(height: 16),
-                          _buildPaymentDetailRow('Valor restante a pagar', payment['remainingBalance']),
-                          const Divider(height: 16),
-                          _buildPaymentDetailRow('Interés de mora', payment['lateInterest']),
-                          const Divider(height: 16),
-                          _buildPaymentDetailRow('Descuento de pronto pago', payment['earlyPayDiscount']),
+                          _buildPaymentDetailRow('Descuento por pronto pago', payment['earlyPayDiscount']),
                           const Divider(height: 16),
                           _buildPaymentDetailRow('Gasto de cobranza', payment['collectionFee']),
-                          const Divider(height: 16),
-                          _buildPaymentDetailRow('Días de intereses de mora', '${payment['lateInterestDays']}'),
-                          const Divider(height: 16),
-                          _buildPaymentDetailRow('Cuotas pendientes por pagar', '${payment['pendingQuotes']}'),
-                          const Divider(height: 16),
-                          _buildPaymentDetailRow('Tasa de interés', payment['interestRate']),
                           if (isNext) ...[
                             const SizedBox(height: 16),
                             SizedBox(
@@ -5032,7 +5387,7 @@ class _CreditDetailScreenState extends State<CreditDetailScreen> {
                                     ),
                                   );
                                 },
-                                child: const Text('Pagar esta cuota'),
+                                child: const Text('Pagar esta cuota', style: TextStyle(fontWeight: FontWeight.bold)),
                               ),
                             ),
                           ],
@@ -5483,15 +5838,7 @@ class PaymentHistoryScreen extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Descargando ${payment['invoice']}.pdf'),
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        );
+                        showToast(context, 'Descargando ${payment['invoice']}.pdf', type: ToastType.info);
                       },
                       icon: Container(
                         padding: const EdgeInsets.all(8),
