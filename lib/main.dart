@@ -538,15 +538,17 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
             colors: [
-              const Color(0xFF1C2546).withAlpha(230),
-              const Color(0xFF1C2546),
+              Color(0xFF1C2546),
+              Color(0xFF1C2546),
+              Color(0xFF2D3A6B),
+              Color(0xFFB8622A),
             ],
-            stops: const [0.0, 1.0],
+            stops: [0.0, 0.6, 0.85, 1.0],
           ),
         ),
         child: SafeArea(
@@ -559,7 +561,7 @@ class WelcomeScreen extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: const Image(
                     image: AssetImage('assets/Logo fondo oscuro.png'),
-                    height: 71,
+                    height: 64,
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -593,7 +595,7 @@ class WelcomeScreen extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF28D16),
-                      foregroundColor: Colors.white,
+                      foregroundColor: const Color(0xFF1C2546),
                       elevation: 6,
                       shadowColor: const Color(0xFFF28D16).withOpacity(0.5),
                       shape: RoundedRectangleBorder(
