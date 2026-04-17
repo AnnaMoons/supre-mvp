@@ -3600,6 +3600,9 @@ class NotificationService {
         date: now.subtract(const Duration(days: 5)),
         type: NotificationType.paymentConfirmed,
         creditId: '12345',
+        receiptInvoice: 'MCSCR-3216-Q6',
+        receiptAmount: '\$350.000',
+        receiptCreditName: 'Creditek #12345',
         isRead: true,
       ),
       NotificationItem(
@@ -3630,6 +3633,9 @@ class NotificationItem {
   final DateTime date;
   final NotificationType type;
   final String? creditId;
+  final String? receiptInvoice;
+  final String? receiptAmount;
+  final String? receiptCreditName;
   bool isRead;
 
   NotificationItem({
@@ -3639,6 +3645,9 @@ class NotificationItem {
     required this.date,
     required this.type,
     this.creditId,
+    this.receiptInvoice,
+    this.receiptAmount,
+    this.receiptCreditName,
     this.isRead = false,
   });
 
@@ -4202,9 +4211,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         onNavigate: () {
           Navigator.pop(modalContext);
           nav.pop();
+          final credits = CreditService.getCredits();
           if (notification.type == NotificationType.paymentDue ||
               notification.type == NotificationType.paymentReminder) {
-            final credits = CreditService.getCredits();
             final preselected = notification.creditId != null
                 ? credits.firstWhere((c) => c.id == notification.creditId,
                     orElse: () => credits.first)
@@ -4212,8 +4221,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             nav.push(MaterialPageRoute(
                 builder: (_) => PaymentScreen(preselectedCredit: preselected)));
           } else if (notification.type == NotificationType.paymentConfirmed) {
-            nav.push(MaterialPageRoute(builder: (_) => const CreditsListScreen()));
+            nav.push(MaterialPageRoute(
+              builder: (_) => PaymentReceiptScreen(notification: notification),
+            ));
           }
+        },
+        onDownload: () {
+          Navigator.pop(modalContext);
+          showToast(context, 'Comprobante enviado a tu correo registrado', type: ToastType.success);
         },
       ),
     );
@@ -4310,11 +4325,13 @@ class _NotificationDetail extends StatelessWidget {
   final NotificationItem notification;
   final VoidCallback onClose;
   final VoidCallback? onNavigate;
+  final VoidCallback? onDownload;
 
   const _NotificationDetail({
     required this.notification,
     required this.onClose,
     this.onNavigate,
+    this.onDownload,
   });
 
   String get _ctaLabel {
@@ -4323,7 +4340,7 @@ class _NotificationDetail extends StatelessWidget {
       case NotificationType.paymentReminder:
         return 'Ir a pagar';
       case NotificationType.paymentConfirmed:
-        return 'Ver mis créditos';
+        return 'Ver detalle del pago';
       default:
         return '';
     }
@@ -4395,6 +4412,22 @@ class _NotificationDetail extends StatelessWidget {
                 child: Text(_ctaLabel),
               ),
             ),
+          if (notification.type == NotificationType.paymentConfirmed) ...[
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: onDownload,
+                icon: const Icon(Icons.download_outlined, size: 18),
+                label: const Text('Descargar comprobante'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFF1C2546),
+                  side: const BorderSide(color: Color(0xFF1C2546)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              ),
+            ),
+          ],
           const SizedBox(height: 16),
         ],
       ),
@@ -4403,6 +4436,115 @@ class _NotificationDetail extends StatelessWidget {
 
   String _formatDate(DateTime date) {
     return DateFormat('dd MMMM yyyy, hh:mm a').format(date);
+  }
+}
+
+class PaymentReceiptScreen extends StatelessWidget {
+  final NotificationItem notification;
+
+  const PaymentReceiptScreen({super.key, required this.notification});
+
+  @override
+  Widget build(BuildContext context) {
+    final date = DateFormat('dd MMMM yyyy, hh:mm a').format(notification.date);
+    final invoice = notification.receiptInvoice ?? '—';
+    final amount = notification.receiptAmount ?? '—';
+    final creditName = notification.receiptCreditName ?? '—';
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Comprobante de pago')),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.green.withAlpha(26),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.check_circle_rounded, color: Colors.green, size: 48),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              '¡Pago exitoso!',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              date,
+              style: TextStyle(color: Colors.grey.shade500, fontSize: 13),
+            ),
+            const SizedBox(height: 32),
+            Card(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    _receiptRow('Crédito', creditName),
+                    const Divider(height: 24),
+                    _receiptRow('Factura / Cuota', invoice),
+                    const Divider(height: 24),
+                    _receiptRow('Valor pagado', amount,
+                        valueStyle: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        )),
+                    const Divider(height: 24),
+                    _receiptRow('Estado', 'Pagado',
+                        valueStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        )),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  showToast(context, 'Comprobante enviado a tu correo registrado',
+                      type: ToastType.success);
+                },
+                icon: const Icon(Icons.download_outlined),
+                label: const Text('Descargar comprobante',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: OutlinedButton(
+                onPressed: () => Navigator.pop(context),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFF1C2546),
+                  side: const BorderSide(color: Color(0xFF1C2546)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                child: const Text('Volver'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _receiptRow(String label, String value, {TextStyle? valueStyle}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: TextStyle(color: Colors.grey.shade600, fontSize: 14)),
+        Text(value, style: valueStyle ?? const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+      ],
+    );
   }
 }
 
